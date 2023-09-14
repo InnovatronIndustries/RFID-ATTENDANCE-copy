@@ -20,20 +20,6 @@ class LogInController extends Controller
             return response()->json(['message' => 'User not found']);
         }
 
-         // Get the latest record for the specified UID
-         $latestRecord = LoginLog::where('uid', $uidToCheck)
-         ->where('type', 'In')
-         ->latest('created_at')
-         ->first();
-         
-         $logDate = Carbon::parse($latestRecord->created_at, 'Asia/Manila');
-         $timeDifferenceInSeconds = $currentDateTime->diffInSeconds($logDate);
- 
-         if ($timeDifferenceInSeconds < 3) {
-             // The time difference is less than 3 seconds, don't log out
-             return response()->json(['success' => false]);
-         }
-         
         $this->storeLoginTime($uidToCheck, $currentDateTime);
         return response()->json(['success' => true, 'message' => 'Logged in']);
     }
