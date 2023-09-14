@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,700&display=swap');
+
+
+
+body {
+    background-image: url('bg.jpg') !important;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    border-left: 15px solid red; /*CHANGE TO COLOR OF SCHOOL*/
+    border-right: 15px solid red; /*CHANGE TO COLOR OF SCHOOL*/
+}
+
+.container {
+    height: 100vh;
+}
+
+.col {
+    height: 100vh;
+    
+}
+
+.image {
+    height: 500px;
+}
+
+.detailsColumn {
+    text-align: center;
+}
+
+.detailsContainer {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.schoolName {
+    font-size: 44px;
+}
+
+#current-time {
+    color: #756041;
+    font-size: 48px;
+}
+
+#student-name {
+    color: #756041;
+    font-size: 48px;
+}
+
+#current-date {
+    font-size: 32px;
+}
+
+#schoolAddress {
+    font-size: 26px;
+}
+
+#apLogo {
+    height: 40px;
+}
+
+@media (max-width: 575.98px) {
+    body {
+        background-image: url('assets/bg.jpg') !important;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+
+}
