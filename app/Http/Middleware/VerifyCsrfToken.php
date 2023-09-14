@@ -16,6 +16,8 @@ class VerifyCsrfToken extends Middleware
         '/check-uid',
         '/login',
         '/logout',
-        '/add-employee'
+        '/add-employee',
+        '/remove-employee',
+        '/remove-student'
     ];
 }

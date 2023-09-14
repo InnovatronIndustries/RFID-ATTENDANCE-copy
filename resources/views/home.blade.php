@@ -8,7 +8,7 @@
     <title>Academe Access Admin</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .add-mask{
+        .add-mask,.update-mask{
             position:fixed;
             justify-content:center;
             align-items:center;
@@ -20,7 +20,7 @@
             background-color:rgba(0,0,0,0.5);
             visibility:hidden;
         }
-        .add-mask[data-visible="true"]{
+        .add-mask[data-visible="true"],.update-mask[data-visible="true"]{
             visibility:visible;   
         }
         /* Add padding to containers */
@@ -101,7 +101,7 @@
         </div>  
         <div class="add-mask" id="add-prompt" data-visible="false">
             <!-- Button trigger modal -->
-            <!-- Modal -->
+            <!-- Modal for create function -->
             <form>
                 <div class="container">
                     <h1 style="display:flex; justify-content:space-between">
@@ -117,7 +117,7 @@
                     <input type="text" name="uid" id="uidInput">
                     <label for="firstname"><b>Firstname </b></label>
                     <input type="text" name="firstname" id="firstnameInput">
-                    <label for="middlename"><b>Middlename </b></label>
+                    <label for="middlename"><b>Middlename (Optional)</b></label>
                     <input type="text" name="middlename" id="middlenameInput" >
                     <label for="lastname"><b>Lastname</b></label>
                     <input type="text" name="lastname" id="lastnameInput">
@@ -127,6 +127,33 @@
                         <option>Staff</oaption>
                     </select>
                     <button type="submit" class="registerbtn">Add</button>
+                </div>
+            </form>
+        </div>
+         <div class="update-mask" id="update-prompt" data-visible="false">
+            <!-- Button trigger modal -->
+            <!-- Modal for update function -->
+            <form id="update-form">
+                <div class="container">
+                    <h1 style="display:flex; justify-content:space-between">
+                        Update Member
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-square close-update-mask" aria-controls="update-prompt" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>  
+                    </h1>
+                    <hr>
+                    <label for="uid"><b>User Id </b></label>
+                    <input type="text" name="uid" id="uidRead" value="">
+                    <label for="firstname"><b>Firstname </b></label>
+                    <input type="text" name="firstname" id="firstnameRead" value="">
+                    <label for="middlename"><b>Middlename </b></label>
+                    <input type="text" name="middlename" id="middlenameRead" value="">
+                    <label for="lastname"><b>Lastname</b></label>
+                    <input type="text" name="lastname" id="lastnameRead" value="">
+                    <label for="role"><b>Role</b></label>
+                    <input type="text" name="role" id="roleRead" value="">
+                    <button type="submit" class="registerbtn">Update</button>
                 </div>
             </form>
         </div>
@@ -140,12 +167,17 @@
         const addbtn=document.querySelector('.btn');
         const addPrompt=document.querySelector('#add-prompt');
         const addCloseBtn=document.querySelector('.close-mask');
+        const updatePrompt=document.querySelector('#update-prompt');
+        const updateCloseBtn=document.querySelector('.close-update-mask');
+        updateCloseBtn.addEventListener('click',()=>{
+            updatePrompt.setAttribute("data-visible","false");
+        })
         addbtn.addEventListener('click',()=>{
            addPrompt.setAttribute("data-visible","true"); 
         });
         addCloseBtn.addEventListener('click',()=>{
             addPrompt.setAttribute("data-visible","false");
-        })
+        });
         function displayMembers() {
             $.ajax({
                 type: 'get',
@@ -153,6 +185,7 @@
                 success: function (response) {
                     if (response.success) {
                         let data = response.data;
+                        $('.row').empty();
                         for (let i = 0; i < data.length; i++) {
                             $('.row').append(
                                 `<div class='col-3 text-center' id=${i}>`,
@@ -160,13 +193,13 @@
                             $(`#${i}`).append(
                                 `<img src='${data[i].avatar}' style='border-radius:50%' width='250px' height='250px' /><hr>`,
                                 `<h3 class='page-header' style='background-color:cadetblue; font-size:1.2rem; text-align: center;'>
-                                    ${data[i].firstname} ${data[i].middlename} ${data[i].lastname}
+                                    ${data[i].firstname} ${(data[i].middlename===null)?"":data[i].middlename} ${data[i].lastname}
                                     <br>
                                     ${data[i].role}
                                 </h3>`,
                                 `<p class='page-header' align='center'>`,
                                     `<span>`,
-                                        `<a class='btn btn-primary' id='editUidInput' value='${data[i].uid}'><span class='glyphicon glyphicon-pencil'></span> Edit</a>`,
+                                        `<a class='btn btn-primary' id='editBtn' onclick='showEditPrompt({uid:${data[i].uid},firstname:"${data[i].firstname}",middlename:"${data[i].middlename}",lastname:"${data[i].lastname}",role:"${data[i].role}"})'><span class='glyphicon glyphicon-pencil'></span> Edit</a>`,
                                         `<a class='btn btn-warning' id='deleteUidInput' title='click for delete' onclick='removeHandler("${data[i].role}","${data[i].uid}")'><span class='glyphicon glyphicon-trash'></span> Delete</a>`,
                                     `</span>`,
                                 `</p>`
@@ -181,6 +214,14 @@
                 }
             });
          }
+        function showEditPrompt({uid,firstname,middlename,lastname,role}){
+            $("#uidRead").val(uid);
+            $("#firstnameRead").val(firstname);
+            $("#middlenameRead").val((middlename===null)?null:middlename);
+            $("#lastnameRead").val(lastname);
+            $("#roleRead").val(role);
+            updatePrompt.setAttribute("data-visible","true") 
+        }
         function addEmployee(field) {
             $.ajax({
                 type: 'post',
@@ -248,6 +289,38 @@
                 }
             });
         }
+
+        function updateHandler(field){
+           let memberRole=field.role;
+           if(memberRole=="Faculty"||memberRole=="Staff"){
+                updateEmployee(field);
+           } 
+           else{
+                updateStudent(field);
+           }
+        }
+        function updateEmployee(){
+
+        }
+        function updateStudent(){
+
+        }
+        $("#update-form").submit(function(e){
+            e.preventDefault();
+            let field ={
+                uid:"",
+                firstname:"",
+                middlename:"",
+                lastname:"",
+                role:"",
+            }
+            field.uid=$("#uidRead").val();
+            field.firstname=$("#firstnameRead").val();
+            field.middlename=$("#middlenameRead").val();
+            field.lastname=$("#lastnameRead").val();
+            field.role=$("#roleRead").val();
+            updateHandler(field);
+        });
         $("form").submit(function(e){
             e.preventDefault();
             let field = {

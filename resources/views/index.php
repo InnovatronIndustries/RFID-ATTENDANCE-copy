@@ -17,7 +17,7 @@
       </div>
       <div class="row">
         <form>
-          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 1;" id="uidInput">
+          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 0;" id="uidInput">
         </form>
       </div>
     </div>
@@ -89,77 +89,6 @@
 
   setInterval(autoReloadPage, 1800000);
 
-  function handleUIDCheck(uidToCheck) {
-    $.ajax({
-      type: 'POST',
-      url: '/check-uid',
-      data: {
-        uid: uidToCheck,
-      },
-      success: function (response) {
-        if (response.success) {
-          var student = response.user;
-          $('.schoolName').text(student.school);
-          $('#current-time').css('display', 'none');
-          $('#student-name').text(student.firstname + " " + student.middlename + " " + student.lastname);
-          $('#current-date').css('display', 'none');
-          $.ajax({
-            type: 'GET',
-            url: '/check-logout-condition',
-            data: { uid: uidToCheck },
-            success: function (logoutConditionResponse) {
-              if (logoutConditionResponse.shouldLogout) {
-                var logoutDateTime = new Date().toLocaleString();
-                $('#status').text("Log Out: " + logoutDateTime);
-                logout(uidToCheck);
-              } else {
-                $.ajax({
-                    type: 'GET',
-                    url: '/get-login-time',
-                    data: { uid: uidToCheck },
-                    success: function (data) {
-                        var logDate = new Date(data.log_date);
-                        var options = {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit',
-                            hour12: true,
-                            weekday: 'long',
-                            month: 'long',
-                            day: 'numeric'
-                        };
-                        var formattedDateTime = logDate.toLocaleString('en-US', options);
-                        $('#status').text("Log In: " + formattedDateTime);
-                    },
-                    error: function (xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-
-                login(uidToCheck);
-              }
-            },
-            error: function (xhr) {
-              console.error("Check logout condition request error: " + xhr.responseText);
-            }
-          });
-          $('.schoolAddress').text("Grade " + student.level + " - " + student.section + " | " + "Student No. " + student.student_no);
-          $('.image').attr('src', student.avatar);
-          $('.image').css('border-radius', '50%');
-          $('#additionalInfo').css('display', 'block');
-          setInterval(function () {
-            displayTimeZone();
-          }, 1000);
-        } else {
-          $('#user-details').html('UID not found');
-        }
-      },
-      error: function (xhr) {
-        console.error(xhr.responseText);
-      }
-    });
-  }
-
   $('form').submit(function (e) {
     e.preventDefault();
     var uidToCheck = $('#uidInput').val();
@@ -168,21 +97,78 @@
     $('#uidInput').val('');
     $('#uidInput').focus();
   });
-
-  function logout(uid) {
+  
+  function handleUIDCheck(uidToCheck) {
     $.ajax({
-      type: 'POST',
-      url: '/logout',
-      data: { uid: uid },
-      success: function (response) {
-        if (response.success) {
-          console.log('Logout successful');
-        } else {
-          console.error('Logout failed');
+        type: 'POST',
+        url: '/check-uid',
+        data: {
+            uid: uidToCheck,
+        },
+        success: function (response) {
+            if (response.success) {
+                shouldLogOut(uidToCheck);
+            } else {
+                alert('RFID Not Registered');
+            }
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
         }
+    });
+  }
+  function shouldLogOut(uidToCheck) {
+    $.ajax({
+        type: 'GET',
+        url: '/should-log-out',
+        data: { uid: uidToCheck },
+        success: function (response) {
+            if (response.success) {
+               getLogoutTime(uidToCheck);
+            } else {
+                getLoginTime(uidToCheck);
+            }
+        },
+        error: function (xhr) {
+            console.error("Check last login request error: " + xhr.responseText);
+        }
+    });
+  }
+  function getLoginTime(uidToCheck) {
+    $.ajax({
+      type: 'GET',
+      url: '/get-login-time/' + uidToCheck,
+      data: { uid: uidToCheck },
+      success: function (data) {
+        var logDate = new Date(data.log_date);
+        var options = {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
+        };
+        var student = data.user;
+                $('.schoolName').text(student.school);
+                $('#current-time').css('display', 'none');
+                $('#student-name').text(student.firstname + " " + student.middlename + " " + student.lastname);
+                $('#current-date').css('display', 'none');
+                $('.schoolAddress').text(student.level + " - " + student.section + " | " + "Student/Employee No. " + student.student_no);
+                $('.image').attr('src', student.avatar);
+                $('.image').css('border-radius', '50%');
+                $('#additionalInfo').css('display', 'block');
+                setInterval(function () {
+                    displayTimeZone();
+                }, 1000);
+        var formattedDateTime = logDate.toLocaleString('en-US', options);
+        $('#status').text("Log In: " + formattedDateTime);
+        // Log the user in
+        login(uidToCheck);
       },
       error: function (xhr) {
-        console.error("Logout request error: " + xhr.responseText);
+        console.error(xhr.responseText);
       }
     });
   }
@@ -196,8 +182,7 @@
         if (response.success) {
           console.log('Login successful');
         } else {
-          alert("Already Logged In");
-          console.error('Login failed');
+          console.error('Already Logged In');
         }
       },
       error: function (xhr) {
@@ -205,6 +190,79 @@
       }
     });
   }
+
+  function getLogoutTime(uidToCheck) {
+    $.ajax({
+      type: 'GET',
+      url: '/get-logout-time/' + uidToCheck,
+      data: { uid: uidToCheck },
+      success: function (data) {
+        var logDate = new Date(data.log_date);
+        var options = {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
+        };
+        var student = data.user;
+                $('.schoolName').text(student.school);
+                $('#current-time').css('display', 'none');
+                $('#student-name').text(student.firstname + " " + student.middlename + " " + student.lastname);
+                $('#current-date').css('display', 'none');
+                $('.schoolAddress').text(student.level + " - " + student.section + " | " + "Student/Employee No. " + student.student_no);
+                $('.image').attr('src', student.avatar);
+                $('.image').css('border-radius', '50%');
+                $('#additionalInfo').css('display', 'block');
+                setInterval(function () {
+                    displayTimeZone();
+                }, 1000);
+        var formattedDateTime = logDate.toLocaleString('en-US', options);
+        $('#status').text("Log In: " + formattedDateTime);
+
+        logout(uidToCheck);
+      },
+      error: function (xhr) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  function logout(uid) {
+    $.ajax({
+      type: 'POST',
+      url: '/logout',
+      data: { uid: uid },
+      success: function (response) {
+        if (response.success) {
+          console.log('Logout successful');
+                var logDate = new Date;
+                var options = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true,
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                var formattedDateTime = logDate.toLocaleString('en-US', options);
+                $('#status').text("Log Out: " + formattedDateTime);
+        } else {
+          console.error('Logout failed');
+        }
+      },
+      error: function (xhr) {
+        console.error("Logout request error: " + xhr.responseText);
+      }
+    });
+  }
+
+
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

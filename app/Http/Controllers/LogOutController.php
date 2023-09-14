@@ -6,82 +6,91 @@ use Illuminate\Http\Request;
 use App\Models\LoginLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 
 class LogOutController extends Controller
 {
     public function logout(Request $request)
     {
         $uidToCheck = $request->input('uid');
+        $currentDateTime = Carbon::now('Asia/Manila');
 
-        if (!$this->isValidUid($uidToCheck)) {
-            return response()->json(['error' => 'Invalid UID'], 401);
+        if (!$uidToCheck) {
+            return response()->json(['message' => 'User not found']);
         }
 
-        $currentDateTime = Carbon::now();
-        $loggedInUser = Session::get('logged_in_user');
-
-        if ($loggedInUser === $uidToCheck) {
-            // User is logged in, create a logout record and remove the session variable
-            $this->storeLogoutTime($uidToCheck, $currentDateTime);
-            Session::forget('logged_in_user');
-            return response()->json(['message' => 'Logged out']);
-        }
-
-        return response()->json(['message' => 'Not logged in']);
-    }
-
-    public function checkLogoutCondition(Request $request)
-    {
-        $uidToCheck = $request->input('uid');
-
-        if (!$this->isValidUid($uidToCheck)) {
-            return response()->json(['error' => 'Invalid UID'], 401);
-        }
-
-        $currentDateTime = Carbon::now();
-        $latestLogin = $this->getLatestLogin($uidToCheck);
-
-        if ($latestLogin && $this->shouldLogout($latestLogin, $currentDateTime)) {
-            return response()->json(['shouldLogout' => true]);
-        }
-
+        // Get the latest record for the specified UID
+        $latestRecord = LoginLog::where('uid', $uidToCheck)
+        ->where('type', 'In')
+        ->latest('created_at')
+        ->first();
         
+        $logDate = Carbon::parse($latestRecord->created_at, 'Asia/Manila');
+        $timeDifferenceInSeconds = $currentDateTime->diffInSeconds($logDate);
 
-        return response()->json(['shouldLogout' => false]);
-    }
+        if ($timeDifferenceInSeconds < 3) {
+            // The time difference is less than 3 seconds, don't log out
+            return response()->json(['success' => false]);
+        }
 
-    private function getLatestLogin($uid)
-    {
-        return LoginLog::where('uid', $uid)
-            ->whereDate('log_date', Carbon::today())
-            ->where('type', 'In')
-            ->orderBy('log_date', 'desc')
-            ->first();
-    }
-
-    private function shouldLogout($loginRecord, $currentDateTime)
-    {
-        $loginTime = Carbon::parse($loginRecord->log_date);
-        $minutesSinceLastLogin = $loginTime->diffInMinutes($currentDateTime);
-        return $minutesSinceLastLogin >= 5;
-    }
-
-    private function isValidUid($uidToCheck)
-    {
-        // Implement your UID validation logic here
-        // Return true if the UID is valid, or false otherwise.
-        return true;
+        $this->storeLogoutTime($uidToCheck, $currentDateTime);
+        return response()->json(['success'=>true, 'message' => 'Logged out']);
     }
 
     private function storeLogoutTime($uidToCheck, $currentDateTime)
     {
         LoginLog::create([
             'uid' => $uidToCheck,
-            'type' => "Out",
+            'type' => 'Out',
             'log_date' => $currentDateTime,
         ]);
-
         Log::info('Logout time stored in database:', ['uid' => $uidToCheck, 'log_date' => $currentDateTime]);
     }
+
+    public function getLogoutTime($uid)
+    {        
+        $result=DB::table('employees')
+            ->select('uid','school','firstname','middlename','lastname','level','section','student_no','role', 'avatar')
+            ->where('uid','=',$uid)
+            ->unionAll(DB::table('students')
+                ->select('uid','school','firstname','middlename','lastname','level','section','student_no','role', 'avatar')
+                ->where('uid','=',$uid)
+            )
+        ->first();
+        
+        if (!$result) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        
+        $currentDateTime = Carbon::now('Asia/Manila');
+
+        $formattedDateTime = $currentDateTime->toIso8601String();
+
+        return response()->json([
+            'user' => $result,
+            'log_date' => $formattedDateTime,
+            'response' => false
+        ]);
+    }
+
+    public function shouldLogout(Request $request)
+    {
+        $uidToCheck = $request->input('uid');
+        
+        $latestRecord = LoginLog::where('uid', $uidToCheck)
+            ->latest('created_at')
+            ->first();
+
+        if (!$latestRecord) {            
+            return response()->json(['success' => false]);
+        }
+
+        if ($latestRecord->type === 'In') {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
+
 }

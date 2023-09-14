@@ -27,13 +27,24 @@ class AdminController extends Controller
     }
     public function removeEmployee(Request $request){
         $uidToDelete=$request->input('uid');
-        
+        if(DB::table('employees')->where('uid',"=",$uidToDelete)->doesntExist()){
+            return response()->json(["success"=>false]);
+        }
+        DB::table('employees')->where('uid','=',$uidToDelete)->delete();
+        return response()->json(["success"=>true]);
     }
     //**************************************************************************
    /*public function addStudent(){
         
     }*/
-
+    public function removeStudent(Request $request){
+        $uidToDelete=$request->input('uid');
+        if(DB::table('students')->where('uid',"=",$uidToDelete)->doesntExist()){
+            return response()->json(["success"=>false]);
+        }
+        DB::table('students')->where('uid','=',$uidToDelete)->delete();
+        return response()->json(["success"=>true,"data"=>$uidToDelete]);
+    }
 
     //***********************************************************************//
     public function getMembers(Request $request){
