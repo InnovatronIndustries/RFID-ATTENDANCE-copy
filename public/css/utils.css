@@ -1,0 +1,144 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* form 137 */
+
+.signature-top:after {
+    position: absolute;
+    content: "";
+    border-bottom: 1px solid #000000;
+    width: 100%;
+    /* transform: translateX(-50%); */
+    /* bottom: -15px; */
+    bottom: 20px;
+    left: 0;
+}
+
+.signature-top {
+    display: inline-block;
+    position: relative;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+/* padding */
+
+/* margin */
+
+.no-gutter {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.no-gutter > [class*="col-"] {
+    padding-right: 0.1em;
+    padding-left: 0.1em;
+}
+
+.no-gutter-sm {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.no-gutter-sm > [class*="col-"] {
+    padding-right: 0.3em;
+    padding-left: 0.3em;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.vertical-align-middle {
+    vertical-align: middle;
+}
+
+.font-11 {
+    font-size: 11px;
+}
+
+.v-hidden {
+    visibility: hidden !important;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+.statbox .title {
+    color: #808080;
+}
+
+.statbox .title,
+.statbox .value {
+    text-align: left !important;
+}
+
+.deco-none {
+    color: #555555 !important;
+    text-decoration: none !important;
+    cursor: auto;
+}
+
+.small-75 {
+    font-size: 60% !important;
+}
+
+.bg-light-gray {
+    background-color: #ededed !important;
+}
+
+.vertical-scroll {
+    min-height: 600px !important;
+    max-height: 600px !important;
+    overflow: hidden !important;
+    overflow-y: scroll !important;
+}
+
+div.push-top {
+    margin-top: 50px !important;
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+/* for sidebar custom icon */
+.custom-icon {
+    height: 20px !important;
+    width: 20px !important;
+    margin-left: -5px !important;
+    margin-right: 5px !important;
+}

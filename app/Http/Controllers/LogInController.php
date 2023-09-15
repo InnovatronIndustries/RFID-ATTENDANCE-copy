@@ -3,68 +3,74 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LoginLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-
+use Storage;
+use App\Services\RfidService;
+use App\Models\{
+    RfidLog,
+    User
+};
 
 class LogInController extends Controller
 {
+    protected $rfidService;
+
+    public function __construct()
+    {
+        $this->rfidService = resolve(RfidService::class);
+    }
+
     public function login(Request $request)
     {
-        $uidToCheck = $request->input('uid');
+        $uid = $request->input('uid');
         $currentDateTime = Carbon::now('Asia/Manila');
 
-        if (!$uidToCheck) {
+        if (!$uid) {
             return response()->json(['message' => 'User not found']);
         }
 
-        $this->storeLoginTime($uidToCheck, $currentDateTime);
+        // Get the latest record for the specified UID
+        $latestRecord = RfidLog::whereUidAndType($uid, 'In')->latest('created_at')->first();
+
+        if ($latestRecord) {
+            $logDate = Carbon::parse($latestRecord->created_at, 'Asia/Manila');
+            $timeDifferenceInSeconds = $currentDateTime->diffInSeconds($logDate);
+
+            if ($timeDifferenceInSeconds < 3) {
+                // The time difference is less than 3 seconds, don't log out
+                return response()->json(['success' => false]);
+            }
+        }
+         
+        $this->storeLoginTime($uid, $currentDateTime);
         return response()->json(['success' => true, 'message' => 'Logged in']);
     }
 
-    private function storeLoginTime($uidToCheck, $logDate)
+    private function storeLoginTime($uid, $logDate)
     {
-        LoginLog::create([
-            'uid' => $uidToCheck,
-            'type' => "In",
-            'log_date' => $logDate,
+        RfidLog::create([
+            'uid'      => $uid,
+            'type'     => 'In',
+            'log_date' => $logDate
         ]);
 
-        Log::info('Login time stored in database:', ['uid' => $uidToCheck, 'log_date' => $logDate]);
+        Log::info('Login time stored in database:', ['uid' => $uid, 'log_date' => $logDate]);
     }
 
 
     public function getLoginTime($uid)
     {
-        
-        $result=DB::table('employees')
-            ->select('uid','school','firstname','middlename','lastname','level','section','student_no','role', 'avatar')
-            ->where('uid','=',$uid)
-            ->unionAll(DB::table('students')
-                ->select('uid','school','firstname','middlename','lastname','level','section','student_no','role', 'avatar')
-                ->where('uid','=',$uid)
-            )
-        ->first();
+        $user = User::whereUid($uid)->first();
 
-        
-        if (!$result) {
+        if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
 
+        $response = $this->rfidService->getLogInformation($user, true);
         
-        $currentDateTime = Carbon::now('Asia/Manila');
-
-        
-        $formattedDateTime = $currentDateTime->toIso8601String();
-
-        return response()->json([
-            'user' => $result,
-            'log_date' => $formattedDateTime,
-            'response' => true
-        ]);
+        return response()->json($response);
     }
-
 
 }

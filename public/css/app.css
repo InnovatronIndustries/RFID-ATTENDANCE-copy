@@ -1,0 +1,187 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);.login .box {
+  border-top: 1px solid #d9d9d9 !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+#sidebar .resizeable {
+  cursor: col-resize;
+  background: url(/images/sidebar-divider-dots.png?d1ea533b815d35ee321b504ca03ca819) 2px 50% no-repeat #ececec !important;
+}
+
+.custom-header {
+  background-color: #3E6A8D !important;
+  border-bottom-color: #3E6A8D !important;
+}
+
+.navbar .toggle-sidebar:active {
+  color: #ffffff;
+  background: #3E6A8D !important;
+  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.25) inset, -1px 0 0 rgba(0, 0, 0, 0.25) inset;
+}
+
+.dropdown-menu.extended li.footer a:hover {
+  background-color: #3E6A8D !important;
+  color: #fff;
+}
+
+.dropdown-menu.extended li p {
+  padding: 6px 15px;
+  background-color: #3E6A8D !important;
+  margin: 0px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+form:not(.login-form) > .form-actions {
+  padding: 10px 15px 10px !important;
+  margin-top: 10px !important;
+  background-color: #f5f5f5 !important;
+  border-top: 1px solid #e5e5e5 !important;
+}
+
+.form-header {
+  margin-bottom: 25px !important;
+}
+
+div.widget.box {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+label.required:after {
+  content: " *";
+  color: red;
+}
+
+label.required2:after {
+  content: " **";
+  color: red;
+}
+
+ul.error-items {
+  list-style-type: none;
+  padding: 0;
+}
+
+.modal-footer {
+  padding: 15px 25px 15px !important;
+}
+
+.btn-sm {
+  font-size: 13px !important;
+}
+
+.select2 {
+  width: 100% !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5 !important;
+  filter: alpha(opacity=50) !important;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.btn {
+  border-radius: 4px !important;
+}
+
+.btn-info {
+  color: #fff !important;
+  background-color: #337ab7 !important;
+  z-index: 2 !important;
+}
+
+.btn-danger {
+  color: #fff !important;
+  background-color: #F94735 !important;
+  z-index: 2 !important;
+  border-radius: 4px !important;
+}
+
+div.push-top {
+  margin-top: 50px !important;
+}
+
+.widget .widget-header h4 {
+  display: inline-block;
+  color: #555555;
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 7px;
+}
+
+div.page-header {
+  margin-bottom: 15px !important;
+}
+
+.mt-5 {
+  margin-top: 5px !important;
+}
+
+div.mt-50 {
+  margin-top: 50px !important;
+}
+
+table.no-wrap th {
+  white-space: nowrap !important;
+}
+
+.text-bold {
+  font-weight: bold !important;
+}
+
+.vertical-scroll {
+  min-height: 600px !important;
+  max-height: 600px !important;
+  overflow: hidden !important;
+  overflow-y: scroll !important;
+}
+
+.vertical-scroll-100 {
+  min-height: 100px !important;
+  max-height: 600px !important;
+  overflow: hidden !important;
+  overflow-y: scroll !important;
+}
+
+.bg-ocean {
+  background-color: #CEE1FF !important;
+}
+
+.bg-light-gray {
+  background-color: #ededed !important;
+}
+
+.scroll-x {
+  overflow-x: auto !important;
+}
+
+li.collection-item {
+  color: black !important;
+  font-size: 15px !important;
+  margin-bottom: 10px !important;
+}
+
+ul#msgList {
+  list-style-type: none !important;
+}
+
+.modal-header {
+  background: #3E6A8D !important;
+}
+
+.modal-title {
+  color: aliceblue !important;
+  text-align: center !important;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+

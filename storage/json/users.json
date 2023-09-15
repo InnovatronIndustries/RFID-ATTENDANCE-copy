@@ -1,0 +1,68 @@
+[
+    {
+        "role_id": 1,
+        "school_id": 0,
+        "uid": null,
+        "firstname": "Super",
+        "lastname": "Admin",
+        "gender": "Male",
+        "avatar": null,
+        "email": "super.admin@gmail.com",
+        "password": "password"
+    },
+    {
+        "role_id": 2,
+        "school_id": 1,
+        "uid": null,
+        "firstname": "School",
+        "lastname": "Admin",
+        "gender": "Male",
+        "avatar": null,
+        "email": "school.admin@gmail.com",
+        "password": "password"
+    },
+    {
+        "role_id": 3,
+        "school_id": 1,
+        "uid": null,
+        "firstname": "School",
+        "lastname": "Staff",
+        "gender": "Male",
+        "avatar": null,
+        "email": "school.staff@gmail.com",
+        "password": "password"
+    },
+    {
+        "role_id": 4,
+        "school_id": 1,
+        "uid": null,
+        "firstname": "School",
+        "lastname": "Faculty",
+        "gender": "Male",
+        "avatar": null,
+        "email": "school.faculty@gmail.com",
+        "password": "password"
+    },
+    {
+        "role_id": 5,
+        "school_id": 1,
+        "uid": "0295745843",
+        "firstname": "Juan",
+        "lastname": "Dela Cruz",
+        "gender": "Male",
+        "avatar": null,
+        "email": "student1@gmail.com",
+        "password": "password"
+    },
+    {
+        "role_id": 5,
+        "school_id": 1,
+        "uid": "0135016243",
+        "firstname": "Juana",
+        "lastname": "Dela Cruz",
+        "gender": "Female",
+        "avatar": null,
+        "email": "student2@gmail.com",
+        "password": "password"
+    }
+]

@@ -1,0 +1,58 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table#noBorder , tr#noBorder > td{
+    border: 0px;
+    border-collapse: collapse;
+}
+
+#font11 { font-size:12px !important; }
+#font11 { font-size:11px !important; }
+
+.name > .line {
+    display: inline-block;
+    /* border-bottom: 1px solid #000; */
+    width: 450px;
+}
+
+.line1 {
+    display: inline-block;
+    /* border-bottom: 1px solid #000; */
+    width: 440px;
+}
+
+.line2 {
+    display: inline-block;
+    /* border-bottom: 1px solid #000; */
+    width: 402px;
+}
+
+.line3 {
+    display: inline-block;
+    /* border-bottom: 1px solid #000; */
+    width: 320px;
+}
+
+.line4 {
+    display: inline-block;
+    /* border-bottom: 1px solid #000; */
+    width: 495px;
+}
+
+.line5 {
+    display: inline-block;
+    /* border-bottom: 1px solid #000; */
+    width: 145px;
+    white-space: nowrap;
+    /* text-align:left !important; */
+}
+
+/* .hiddenTxt {
+    visibility: hidden !important;
+}
+
+.visibleTxt {
+    visibility: visible !important;
+} */

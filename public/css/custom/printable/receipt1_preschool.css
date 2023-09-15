@@ -1,0 +1,133 @@
+@media print {
+
+    @page {
+        /* margin-bottom: 15; */
+        size: Letter portrait;
+        margin: 0; padding: 0;
+    }
+
+    @page :first {
+        /* margin-top: 0px; */
+        /* margin-left: 150px; gumana sa .matrix*/
+
+        /* 4/25/2019 */
+    }
+
+    body * {
+        visibility: hidden;
+        margin: 0; padding: 0;
+        /* transform: scale(.100) !important; */
+    }
+
+    #DivToPrint, #DivToPrint * {
+        visibility: visible;
+    }
+
+    .page-break-before {
+        page-break-before: always !important;
+        /* margin-top: 1550px; */
+    }
+
+    .hide-on-print {
+        display: none;
+    }
+
+    /* #printenlistmentPageBtn, .icon-printer {
+    display: none;
+    } */
+
+    #DivToPrint {
+        /* position: absolute; */
+        /* left: 0;
+        right: 0;
+        top: 0; */
+        display: block !important;
+        margin-top: -52px;
+        font-weight: bold !important;
+    }
+
+    .col-print-1 {width:8%;  float:left;}
+    .col-print-2 {width:16%; float:left;}
+    .col-print-3 {width:25%; float:left;}
+    .col-print-4 {width:33%; float:left;}
+    .col-print-5 {width:42%; float:left;}
+    .col-print-6 {width:50%; float:left;}
+    .col-print-7 {width:58%; float:left;}
+    .col-print-8 {width:66%; float:left;}
+    .col-print-9 {width:75%; float:left;}
+    .col-print-10{width:83%; float:left;}
+    .col-print-11{width:92%; float:left;}
+    .col-print-12{width:100%; float:left;}
+
+    .hiddenTxt { visibility: hidden !important; }
+    .visibleTxt { visibility: visible !important; }
+
+    .studentNameData { margin-left: 120px !important; }
+
+    .tuitionLbl {
+        white-space: nowrap;
+        /* margin-top: -62px; */
+        margin-left: 140px;
+        margin-top: 0px;
+    }
+
+    .dateLbl {
+        margin-left: 600px;
+        margin-top: -25px;
+        white-space: nowrap !important;
+    }
+
+    .classificationLbl { margin-left: 640px; }
+
+    /* .classificationOld { } */
+
+    .classificationNew { margin-left: 26px; }
+
+    .receivedFromLbl {
+        margin-left: 325px;
+        margin-top: 60px;
+    }
+
+    .addressLbl {
+        margin-left: 325px;
+        margin-top: 25px;
+    }
+
+    .telephoneNoLbl {
+        margin-left: 325px;
+        margin-top: 8px;
+    }
+
+    .amountInWordsLbl {
+        margin-left: 325px;
+        margin-top: 25px;
+    }
+
+    .pesosLbl {
+        margin-left: 325px;
+        margin-top: 30px;
+    }
+
+    .divBetweenTuitionAndPaymentDueLbl { margin-bottom: 75px !important; }
+
+    .paymentDueLbl { margin-left: 140px; margin-top: -250px; margin-bottom: 48px; }
+
+    .formOfPaymentLbl { margin-left: 90px; }
+
+    .cashFormLbl { margin-right: 80px; }
+
+    .bankNameLbl { margin-left: 140px; }
+
+    .checkNoLbl { margin-left: 140px; }
+
+    .checkDateLbl { margin-left: 140px; }
+
+    .checkAmtLbl { margin-left: 140px; }
+
+    .termsOfPaymentLbl { margin-left: 90px; margin-top: 10px; }
+
+    .annualTermLbl { margin-right: 39px; }
+
+    .semTermLbl { margin-right: 47px; }
+
+}

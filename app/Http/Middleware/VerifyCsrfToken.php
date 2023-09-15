@@ -14,8 +14,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/check-uid',
-        '/login',
-        '/logout',
+        '/rfid-login',
+        '/rfid-logout',
         '/add-employee',
         '/remove-employee',
         '/remove-student',

@@ -1,0 +1,168 @@
+/* FORM INPUTS */
+.left-label {
+    float: left;
+    width: 10em;
+    margin-right: 1em;
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.left-label-long {
+    float: left;
+    width: 12em;
+    margin-right: 1em;
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.customMessageLabel {
+    float: left;
+    margin-right: 1em;
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 1px;
+}
+
+.input-gold:focus {
+    border-color: #ffd205 !important;
+    border: 2px solid #ffd205;
+}
+
+.input-green:focus {
+    border-color: #067230 !important;
+    border: 2px solid #067230;
+}
+
+.inputGoldDefault {
+    border-color: #ffd205 !important;
+    border: 2px solid #ffd205;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus,
+a.selected {
+    text-decoration: none;
+    color: #000000;
+    background-color: #eeeeee;
+}
+
+.dropdown-menu>.active>a {
+    color: #000000;
+    background-color: #eeeeee;
+}
+
+.schoolTitle {
+    font-family: "Lucida Calligraphy";
+}
+
+.arial {
+    font-family: "arial";
+}
+
+.roundedCorner {
+    border-radius: 25px;
+    border: 2px solid;
+    padding: 20px;
+}
+
+.noBr {
+    white-space: nowrap;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.displayWaterMark {
+    background-image: url("../../img/logo/tla_logo.png") no-repeat center center fixed;
+}
+
+/* report card */
+.noBorder {
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.transparent-border {
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.tdSmall {
+    width: 13%;
+}
+
+.indent {
+    padding-left: 10px;
+}
+
+.subindent {
+    padding-left: 20px;
+}
+
+/* for file upload icon */
+.image-upload>input {
+    display: none;
+}
+
+a.list-group-item.active {
+    border-color: #067230;
+    background-color: #067230;
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    background-color: #067230;
+    border-color: #067230;
+}
+
+.custom-icon {
+    height: 20px !important;
+    width: 20px !important;
+    margin-left: -5px !important;
+    margin-right: 5px !important;
+}
+
+.dynamicBG {
+    background: url("img/logo/wallpaper.svg") !important;
+    /* -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important; */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.fixed-sticky-div {
+    /* position: -webkit-sticky;
+    position: sticky;
+    top: 0; */
+}
+
+.required:after {
+    color: #e32;
+    content: "*";
+}
+
+.has-error {
+    border-color: #b94a48;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 900px;
+    }
+}
+

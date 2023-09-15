@@ -1,0 +1,123 @@
+@media print {
+    @page {
+        /* margin-bottom: 15; */
+        size: Letter portrait;
+        margin: 0 !important;
+        padding: 0 !important;
+        max-height: 10% !important;
+    }
+
+    @page :first {
+        /* margin-top: -60px; */
+    }
+
+    html,
+    body {
+        height: 200vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+    }
+
+    body * {
+        font-size: 8pt !important;
+        height: auto !important;
+        visibility: hidden;
+        /* border: 1px solid black; */
+        padding: 0;
+        /* page-break-after: avoid !important;
+        page-break-before: avoid !important; */
+    }
+
+    /* body * {
+        visibility: hidden;
+        padding: 0;
+    } */
+
+    #DivToPrint,
+    #DivToPrint * {
+        visibility: visible;
+    }
+
+    .page-break-before {
+        page-break-before: always !important;
+    }
+
+    .hide-on-print {
+        display: none !important;
+    }
+
+    .show-on-print {
+        display: block !important;
+    }
+
+    .hide-me {
+        display: none !important;
+    }
+
+    .pushToTop {
+        margin-top: -15px !important;
+    }
+    .pushToTop1 {
+        margin-top: -35px !important;
+    }
+    .pushToTop2 {
+        margin-top: -35px !important;
+    }
+
+    .pushToBottom {
+        margin-top: 25px !important;
+    }
+    .pushToBottomMax {
+        margin-top: 120px !important;
+    }
+
+    .col-print-1 {
+        width: 8%;
+        float: left;
+    }
+    .col-print-2 {
+        width: 16%;
+        float: left;
+    }
+    .col-print-3 {
+        width: 25%;
+        float: left;
+    }
+    .col-print-4 {
+        width: 33%;
+        float: left;
+    }
+    .col-print-5 {
+        width: 42%;
+        float: left;
+    }
+    .col-print-6 {
+        width: 50%;
+        float: left;
+    }
+    .col-print-7 {
+        width: 58%;
+        float: left;
+    }
+    .col-print-8 {
+        width: 66%;
+        float: left;
+    }
+    .col-print-9 {
+        width: 75%;
+        float: left;
+    }
+    .col-print-10 {
+        width: 83%;
+        float: left;
+    }
+    .col-print-11 {
+        width: 92%;
+        float: left;
+    }
+    .col-print-12 {
+        width: 100%;
+        float: left;
+    }
+}
