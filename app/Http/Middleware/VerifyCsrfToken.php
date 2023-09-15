@@ -18,6 +18,8 @@ class VerifyCsrfToken extends Middleware
         '/rfid-logout',
         '/add-employee',
         '/remove-employee',
-        '/remove-student'
+        '/remove-student',
+        '/update-employee',
+        '/update-student'
     ];
 }

@@ -33,6 +33,23 @@ class AdminController extends Controller
         DB::table('employees')->where('uid','=',$uidToDelete)->delete();
         return response()->json(["success"=>true]);
     }
+    public function updateEmployee(Request $request){
+        $field=$request->all();
+        if(DB::table('employees')->where('uid','=',$field['uid'])->doesntExist()){
+            return response()->json(["success"=>false]);
+        }
+        /*DB::table('employees')->where('uid','=',$field['uid'])
+            ->update(
+                [
+                    'uid'=>$field['uid'],
+                    'firstname'=>$field['firstname'],
+                    'middlename'=>$field['middlename'],
+                    'lastname'=>$field['lastname'],
+                    'role'=>$field['role']
+                ]
+        );*/
+        return response()->json(["success"=>true]);
+    }
     //**************************************************************************
    /*public function addStudent(){
         
@@ -45,7 +62,23 @@ class AdminController extends Controller
         DB::table('students')->where('uid','=',$uidToDelete)->delete();
         return response()->json(["success"=>true,"data"=>$uidToDelete]);
     }
-
+    public function updateStudent(Request $request){
+        $field=$request->all();
+        if(DB::table('students')->where('uid','=',$field['uid'])->doesntExist()){
+            return response()->json(["success"=>false]);
+        }
+        DB::table('students')->where('uid','=',$field['uid'])
+            ->update(
+                [
+                    'uid'=>$field['uid'],
+                    'firstname'=>$field['firstname'],
+                    'middlename'=>$field['middlename'],
+                    'lastname'=>$field['lastname'],
+                    'role'=>$field['role']
+                ]
+        );
+        return response()->json(["success"=>true]);
+    }
     //***********************************************************************//
     public function getMembers(Request $request){
         $result=DB::table('employees')
