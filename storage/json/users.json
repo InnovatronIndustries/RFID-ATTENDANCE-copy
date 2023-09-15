@@ -12,7 +12,7 @@
     },
     {
         "role_id": 2,
-        "school_id": 0,
+        "school_id": 1,
         "uid": null,
         "firstname": "School",
         "lastname": "Admin",
@@ -23,7 +23,7 @@
     },
     {
         "role_id": 3,
-        "school_id": 0,
+        "school_id": 1,
         "uid": null,
         "firstname": "School",
         "lastname": "Staff",
@@ -34,7 +34,7 @@
     },
     {
         "role_id": 4,
-        "school_id": 0,
+        "school_id": 1,
         "uid": null,
         "firstname": "School",
         "lastname": "Faculty",
@@ -45,7 +45,7 @@
     },
     {
         "role_id": 5,
-        "school_id": 0,
+        "school_id": 1,
         "uid": "0295745843",
         "firstname": "Juan",
         "lastname": "Dela Cruz",
@@ -56,7 +56,7 @@
     },
     {
         "role_id": 5,
-        "school_id": 0,
+        "school_id": 1,
         "uid": "0135016243",
         "firstname": "Juana",
         "lastname": "Dela Cruz",

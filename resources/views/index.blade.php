@@ -17,7 +17,7 @@
       </div>
       <div class="row">
         <form>
-          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 0;" id="uidInput">
+          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 1;" id="uidInput">
         </form>
       </div>
     </div>
@@ -151,17 +151,17 @@
           day: 'numeric'
         };
         var student = data.user;
-                $('.schoolName').text(student.school);
-                $('#current-time').css('display', 'none');
-                $('#student-name').text(student.firstname + " " + student.middlename + " " + student.lastname);
-                $('#current-date').css('display', 'none');
-                $('.schoolAddress').text(student.level + " - " + student.section + " | " + "Student/Employee No. " + student.student_no);
-                $('.image').attr('src', student.avatar);
-                $('.image').css('border-radius', '50%');
-                $('#additionalInfo').css('display', 'block');
-                setInterval(function () {
-                    displayTimeZone();
-                }, 1000);
+        $('.schoolName').text(student.school);
+        $('#current-time').css('display', 'none');
+        $('#student-name').text(`${student.firstname} ${student.middlename?? ''} ${student.lastname}`);
+        $('#current-date').css('display', 'none');
+        $('.schoolAddress').text(student.details);
+        $('.image').attr('src', student.avatar);
+        $('.image').css('border-radius', '50%');
+        $('#additionalInfo').css('display', 'block');
+        setInterval(function () {
+          displayTimeZone();
+        }, 1000);
         var formattedDateTime = logDate.toLocaleString('en-US', options);
         $('#status').text("Log In: " + formattedDateTime);
         // Log the user in
@@ -176,7 +176,7 @@
   function login(uid) {
     $.ajax({
       type: 'POST',
-      url: '/login',
+      url: '/rfid-login',
       data: { uid: uid },
       success: function (response) {
         if (response.success) {
@@ -208,17 +208,17 @@
           day: 'numeric'
         };
         var student = data.user;
-                $('.schoolName').text(student.school);
-                $('#current-time').css('display', 'none');
-                $('#student-name').text(student.firstname + " " + student.middlename + " " + student.lastname);
-                $('#current-date').css('display', 'none');
-                $('.schoolAddress').text(student.level + " - " + student.section + " | " + "Student/Employee No. " + student.student_no);
-                $('.image').attr('src', student.avatar);
-                $('.image').css('border-radius', '50%');
-                $('#additionalInfo').css('display', 'block');
-                setInterval(function () {
-                    displayTimeZone();
-                }, 1000);
+        $('.schoolName').text(student.school);
+        $('#current-time').css('display', 'none');
+        $('#student-name').text(`${student.firstname} ${student.middlename?? ''} ${student.lastname}`);
+        $('#current-date').css('display', 'none');
+        $('.schoolAddress').text(student.details);
+        $('.image').attr('src', student.avatar);
+        $('.image').css('border-radius', '50%');
+        $('#additionalInfo').css('display', 'block');
+        setInterval(function () {
+          displayTimeZone();
+        }, 1000);
         var formattedDateTime = logDate.toLocaleString('en-US', options);
         $('#status').text("Log In: " + formattedDateTime);
 
@@ -233,7 +233,7 @@
   function logout(uid) {
     $.ajax({
       type: 'POST',
-      url: '/logout',
+      url: '/rfid-logout',
       data: { uid: uid },
       success: function (response) {
         if (response.success) {
@@ -259,9 +259,6 @@
       }
     });
   }
-
-
-
 
 </script>
 

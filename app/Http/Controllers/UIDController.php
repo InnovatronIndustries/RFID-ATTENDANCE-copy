@@ -2,38 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\{
+    User
+};
 
 class UIDController extends Controller
 {
     public function checkUID(Request $request)
     {
-        $uidToCheck = $request->input('uid'); // Get the UID from the AJAX request
+        $user = User::whereUid($request->uid)->first();
+        $data = ['success' => false, 'message' => 'UID not found'];
 
-        $result=DB::table('employees')
-            ->select('uid','school','firstname','middlename','lastname','role', 'avatar')
-            ->where('uid','=',$uidToCheck)
-            ->unionAll(DB::table('students')
-                ->select('uid','school','firstname','middlename','lastname','role', 'avatar')
-                ->where('uid','=',$uidToCheck)
-            )
-        ->get();
-
-        if ($result) {
-            // UID exists, return user details
-            return response()->json([
-                'success' => true,
-                'user' => $result
-            ]);
-        } else {
-            // UID doesn't exist
-            return response()->json([
-                'success' => false,
-                'message' => 'UID not found'
-            ]);
+        if ($user) {
+            $data = ['success' => true, 'message' => $user];
         }
+
+        return response()->json($data);
     }
 }
 

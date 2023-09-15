@@ -1,16 +1,22 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UIDController;
-use App\Http\Controllers\LogInController;
-use App\Http\Controllers\LogOutController;
-use App\Http\Controllers\SmsController;
-use App\Http\Controllers\AdminController;
 
-Route::get('/', function () {
-    return view('index');
-});
+use App\Http\Controllers\{
+    RfidController,
+    SubdomainTestController,
+    UIDController,
+    LogInController,
+    LogOutController,
+    SmsController,
+    AdminController
+};
+
+use App\Http\Controllers\CMS\{
+    DashboardController
+};
+
+Route::get('/', RfidController::class);
 
 Route::get('/admin',function(){
     return view('home');
@@ -18,14 +24,11 @@ Route::get('/admin',function(){
 // Route for verifying UID
 Route::post('/check-uid', [UIDController::class, 'checkUID']);
 
-// Route for login 
-Route::post('/login', [LogInController::class, 'login'])->name('login');
+// Route for login
+Route::post('/rfid-login', [LogInController::class, 'login'])->name('rfid.login');
 
 // Route to get the login time
 Route::get('/get-login-time/{uid}', [LogInController::class, 'getLoginTime']);
-
-// Route for logout
-Route::get('/logout', [LogOutController::class, 'logout'])->name('logout');
 
 // Route to get the logout time
 Route::get('/get-logout-time/{uid}', [LogOutController::class, 'getLogOutTime']);
@@ -35,7 +38,7 @@ Route::get('/check-logout-condition', [LogOutController::class, 'checkLogoutCond
 
 Route::get('/should-log-out', [LogOutController::class, 'shouldLogout']);
 
-Route::post('/logout', 'App\Http\Controllers\LogOutController@logout');
+Route::post('/rfid-logout', 'App\Http\Controllers\LogOutController@logout')->name('rfid.logout');
 
 // Route for Sms
 Route::get('/send-sms', [SmsController::class, 'sendSms']);
@@ -54,4 +57,15 @@ Route::post('/remove-student',[AdminController::class,'removeStudent']);
 
 Route::group(['middleware' => ['web']], function () {
     // Your routes here
+});
+
+Auth::routes();
+
+// check if subdomain is working - for testing purposes.
+Route::domain('{school_name}.rfid-attendance.test')->group(function () {
+    Route::resource('subdomain-test', SubdomainTestController::class)->only(['index']);
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
