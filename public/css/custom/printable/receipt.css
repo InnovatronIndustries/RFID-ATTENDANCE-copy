@@ -1,0 +1,28 @@
+@media print {
+
+    @page {
+        /* margin-top: -100px; */
+        margin-bottom: 15;
+        size: Letter landscape;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #DivToPrint, #DivToPrint * {
+        visibility: visible;
+    }
+
+    /* #printenlistmentPageBtn, .icon-printer {
+    display: none;
+    } */
+
+    #DivToPrint {
+        /* position: absolute; */
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+}

@@ -1,0 +1,45 @@
+@media print {
+    @page {
+        size: A4 Portrait;
+        margin: 10mm 0 10mm 0;
+    }
+
+    @page:first {
+        margin-top: 5mm !important;
+    }
+
+    /* prevent from printing an excess blank page */
+    html,
+    body {
+        height: auto !important;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    #yellowTD {
+        background-color: #ffd205 !important;
+    }
+
+    #blueTD {
+        background-color: #add8e6 !important;
+    }
+
+    .nowrap {
+        white-space: nowrap !important;
+    }
+
+    body * {
+        font-size: 7pt;
+    }
+}
+
+.schoolTitle {
+    display: inline-block !important;
+    font-size: 1.5em !important;
+}
+
+.left-5 {
+    margin-left: 5px !important;
+}

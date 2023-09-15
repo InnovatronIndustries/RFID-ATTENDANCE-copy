@@ -1,0 +1,29 @@
+.box {
+    border-top: 5px solid #2E7D32 !important;
+}
+
+.dynamicBG {
+    background: url("../../assets/wallpaper/wallpaper.svg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.tlaGreenBtn {
+    background-color: #2E7D32 !important;
+}
+
+.form-title {
+    margin-top: 0;
+}
+
+.login .single-sign-on {
+    width: 350px;
+    padding: 15px 0;
+    opacity: 1 !important;
+    -webkit-transition: opacity 200ms ease-out;
+    -moz-transition: opacity 200ms ease-out;
+    -o-transition: opacity 200ms ease-out;
+    transition: opacity 200ms ease-out;
+}

@@ -1,0 +1,154 @@
+@media print {
+    @page {
+        /* margin-top: -151px; */
+        /* margin-top: -1251px !important; */
+        margin-bottom: 5mm;
+        size: Legal portrait;
+    }
+
+    /* prevent from printing an excess blank page */
+    html,
+    body {
+        height: auto !important;
+    }
+
+    table {
+        /* font-family: arial, sans-serif; */
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    /* th { font-size: 10px;  }
+      td { font-size: 10px; } */
+
+    table#shortenTbl tr:nth-child(1) th {
+        font-size: 8px;
+    }
+    td {
+        font-size: 8px;
+    }
+
+    table#shortenAttendanceTbl {
+        max-height: 184px !important;
+    }
+
+    table#shortenTraitsTbl {
+        max-height: 184px !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #DivToPrint,
+    #DivToPrint * {
+        visibility: visible;
+    }
+
+    /* #printenlistmentPageBtn, .icon-printer {
+    display: none;
+    } */
+
+    #DivToPrint {
+        position: absolute;
+        left: 0;
+        right: 0;
+        /* top: 0; */
+        margin-top: -172px !important;
+    }
+
+    .subindent {
+        padding-left: 20px !important;
+    }
+
+    .col-print-1 {
+        width: 8%;
+        float: left;
+    }
+    .col-print-2 {
+        width: 16%;
+        float: left;
+    }
+    .col-print-3 {
+        width: 25%;
+        float: left;
+    }
+    .col-print-4 {
+        width: 33%;
+        float: left;
+    }
+    .col-print-5 {
+        width: 42%;
+        float: left;
+    }
+    .col-print-6 {
+        width: 50%;
+        float: left;
+    }
+    .col-print-7 {
+        width: 58%;
+        float: left;
+    }
+    .col-print-8 {
+        width: 66%;
+        float: left;
+    }
+    .col-print-9 {
+        width: 75%;
+        float: left;
+    }
+    .col-print-10 {
+        width: 83%;
+        float: left;
+    }
+    .col-print-11 {
+        width: 92%;
+        float: left;
+    }
+    .col-print-12 {
+        width: 100%;
+        float: left;
+    }
+
+    .font-12 {
+        font-size: 12px !important;
+    }
+
+    .font-11 {
+        font-size: 11px !important;
+    }
+
+    .font-10 {
+        font-size: 10px !important;
+    }
+
+    .font-9 {
+        font-size: 9px !important;
+    }
+}
+/*
+#center-img {
+    background-image: url("{{ asset("img/logo/tla_logo.png") }}");
+    background-position: center;
+    width: 700px;
+    height: 400px;
+} */
+
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+    border-top: 1px solid black !important;
+}
+
+.panel {
+    background-color: none !important;
+    /* background: url("http://18.220.31.80/img/logo/tla_logo_trans.png") !important; */
+    background-repeat: no-repeat !important;
+    background-position: 50% 50% !important;
+    background-size: 570px 580px !important;
+    /* background-attachment: fixed !important; */
+    /* background-position: center !important; */
+}

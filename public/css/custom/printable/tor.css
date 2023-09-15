@@ -1,0 +1,119 @@
+/* page-break-inside:avoid; */
+@media print {
+    @page {
+        size: Legal portrait;
+        margin: 15mm 0 10mm 0;
+        /* margin-top: 10mm; */
+        /* margin-bottom: 10mm; */
+    }
+
+    @page:first {
+        /* margin-top: 5mm !important; */
+    }
+
+    /* prevent from printing an excess blank page */
+    html,
+    body {
+        height: auto !important;
+        /* border: 1px solid #000000 !important; */
+        /* padding-left: 0px !important; */
+        /* padding-right: 0px !important; */
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        /* margin-left: -18px !important; */
+        /* margin-right: -18px !important; */
+        font-size: 10px !important;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    .tla-logo {
+        margin-left: -20px !important;
+    }
+
+    .school-address {
+        margin-left: -20px !important;
+    }
+
+    .print-font-9 {
+        font-size: 9px !important;
+    }
+
+    .print-font-10 {
+        font-size: 10px !important;
+    }
+
+    .print-font-11 {
+        font-size: 11px !important;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .gray-bg {
+        background-color: #aeaaaa !important;
+        color: #000000 !important;
+    }
+
+    .col-print-1 {
+        width: 8%;
+        float: left;
+    }
+    .col-print-2 {
+        width: 16%;
+        float: left;
+    }
+    .col-print-3 {
+        width: 25%;
+        float: left;
+    }
+    .col-print-4 {
+        width: 33%;
+        float: left;
+    }
+    .col-print-5 {
+        width: 42%;
+        float: left;
+    }
+    .col-print-6 {
+        width: 50%;
+        float: left;
+    }
+    .col-print-7 {
+        width: 58%;
+        float: left;
+    }
+    .col-print-8 {
+        width: 66%;
+        float: left;
+    }
+    .col-print-9 {
+        width: 75%;
+        float: left;
+    }
+    .col-print-10 {
+        width: 83%;
+        float: left;
+    }
+    .col-print-11 {
+        width: 92%;
+        float: left;
+    }
+    .col-print-12 {
+        width: 100%;
+        float: left;
+    }
+}
+
+.panel {
+    background-color: none !important;
+    background: url("http://18.220.31.80/img/logo/tla_logo_trans.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 250px !important;
+    background-size: 570px 580px !important;
+    /* -webkit-print-color-adjust: exact !important; */
+}

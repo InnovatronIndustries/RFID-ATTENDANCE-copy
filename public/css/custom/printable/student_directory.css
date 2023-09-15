@@ -1,0 +1,56 @@
+@media print {
+
+    tbody, tr, th, td {page-break-inside: avoid;}
+
+    @page {
+        /* margin-top: -300px; */
+        /* margin-bottom: 15; */
+        size: A4 landscape;
+        margin-left: -150px;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    @page :first {
+        margin-top: -40px;
+    }
+
+    html, body {
+        /* height:100% !important; */
+        /* margin: 0 !important; */
+        padding: 0 !important;
+        margin: 0 !important;
+        /* overflow: hidden !important; */
+    }
+
+    body * {
+        visibility: hidden;
+        font-size: 7pt;
+    }
+
+    #DivToPrint, #DivToPrint * {
+        visibility: visible;
+    }
+
+    .yellow-td {
+        background-color: #FDFF4B !important;
+    }
+
+    .nowrap {
+        white-space: nowrap !important;
+    }
+
+}
+
+.schoolTitle {
+    display: inline-block !important;
+    font-size: 1.5em !important;
+}
+
+#DivToPrint * {
+    font-size: 8pt;
+}
+
+.nowrap {
+    white-space: nowrap !important;
+}

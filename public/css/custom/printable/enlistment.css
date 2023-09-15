@@ -1,0 +1,58 @@
+@media print {
+
+    @page {
+        margin-top: -40px;
+        /* margin: 0; */
+        /* margin-bottom: 15; */
+        size: Letter portrait;
+    }
+
+    @page :first {
+        margin-left: 30px;
+    }
+
+    /* force to print page 1 only */
+    html, body {
+        height:100% !important;
+        /* margin: 0 !important; */
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    body * {
+        visibility: hidden;
+        font-size: 10pt;
+    }
+
+    h4 {
+        font-size: 18pt;
+    }
+
+    h3 {
+        font-weight: 600;
+    }
+
+    #printable-enlistment-form, #printable-enlistment-form * {
+        visibility: visible;
+    }
+
+    /* #printenlistmentPageBtn, .icon-printer {
+    display: none;
+    } */
+
+    #printable-enlistment-form {
+        /* position: absolute; */
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .print {
+        display: block !important;
+    }
+
+    /* .print:last-child {
+        page-break-after: auto;
+    } */
+
+}
