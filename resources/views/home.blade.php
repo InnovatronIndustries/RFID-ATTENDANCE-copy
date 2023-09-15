@@ -102,7 +102,7 @@
         <div class="add-mask" id="add-prompt" data-visible="false">
             <!-- Button trigger modal -->
             <!-- Modal for create function -->
-            <form id="add-form">
+            <form>
                 <div class="container">
                     <h1 style="display:flex; justify-content:space-between">
                         Add Employee
@@ -299,43 +299,11 @@
                 updateStudent(field);
            }
         }
-        function updateEmployee(field){
-            $.ajax({
-                type:'post',
-                url:'/update-employee',
-                data:field,
-                success:function(response){
-                    if(response.success){
-                        console.log('Employee data updated!');
-                        //displayMembers();
-                    }
-                    else{
-                        console.log("Failed to update employee data!");
-                    }
-                },
-                error:function(error){
-                    console.error("Update employee request error: ",error);
-                }
-            });
+        function updateEmployee(){
+
         }
-        function updateStudent(field){
-            $.ajax({
-                type:'post',
-                url:'/update-student',
-                data:field,
-                success:function(response){
-                    if(response.success){
-                        console.log('Student data updated!');
-                        displayMembers();   
-                    }
-                    else{
-                        console.log("Failed to update student data!");
-                    }
-                },
-                error:function(error){
-                    console.error("Update student request error: ",error);
-                }
-            })
+        function updateStudent(){
+
         }
         $("#update-form").submit(function(e){
             e.preventDefault();
@@ -353,7 +321,7 @@
             field.role=$("#roleRead").val();
             updateHandler(field);
         });
-        $("#add-form").submit(function(e){
+        $("form").submit(function(e){
             e.preventDefault();
             let field = {
               uid:"",

@@ -43,7 +43,7 @@ Route::get('/send-sms', [SmsController::class, 'sendSms']);
 // Route for adding employee 
 Route::post('/add-employee',[AdminController::class,'addEmployee']);
 
-//Route for getting employee and student data
+//Route for getting employee data
 Route::get('/get-members',[AdminController::class,'getMembers']);
 
 //Route for removing employee
@@ -51,10 +51,6 @@ Route::post('/remove-employee',[AdminController::class,'removeEmployee']);
 
 //Route for removing students
 Route::post('/remove-student',[AdminController::class,'removeStudent']);
-
-Route::post('/update-employee',[AdminController::class,'updateEmployee']);
-
-Route::post('/update-student',[AdminController::class,'updateStudent']);
 
 Route::group(['middleware' => ['web']], function () {
     // Your routes here
