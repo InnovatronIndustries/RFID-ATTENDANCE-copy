@@ -37,6 +37,7 @@
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   $(document).ready(function () {
     $('#uidInput').focus();
@@ -107,13 +108,15 @@
         },
         success: function (response) {
             if (response.success) {
-                shouldLogOut(uidToCheck);
+              shouldLogOut(uidToCheck);
             } else {
-                swal('RFID Not Registered', {
-                  position: 'top-end',
-                  title: 'RFID Not Registered',
-                  button: false,
-                })
+              Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'RFID Not Registered',
+                showConfirmButton: false,
+                timer: 1500
+              });
             }
         },
         error: function (xhr) {
