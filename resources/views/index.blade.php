@@ -109,7 +109,11 @@
             if (response.success) {
                 shouldLogOut(uidToCheck);
             } else {
-                alert('RFID Not Registered');
+                swal('RFID Not Registered', {
+                  position: 'top-end',
+                  title: 'RFID Not Registered',
+                  button: false,
+                })
             }
         },
         error: function (xhr) {
