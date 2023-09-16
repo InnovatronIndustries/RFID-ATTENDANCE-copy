@@ -16,6 +16,10 @@ use App\Http\Controllers\CMS\{
     DashboardController
 };
 
+use App\Http\Controllers\Api\{
+    Integrations\SmsIntegrationController
+};
+
 Route::get('/', RfidController::class);
 
 Route::get('/admin',function(){
@@ -73,3 +77,6 @@ Route::domain('{school_name}.rfid-attendance.test')->group(function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
+
+// webhooks
+Route::get('sms-callback', [SmsIntegrationController::class, 'sendCallback']);

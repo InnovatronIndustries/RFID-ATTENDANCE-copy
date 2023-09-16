@@ -82,6 +82,14 @@ class User extends Authenticatable
         $this->attributes['lastname'] = ucfirst($value);
     }
 
+    // remove leading zeros
+    public function setMobileNoAttribute($value)
+    {
+        $this->attributes['mobile_no'] = $value !== null
+            ? ltrim($value, "0")
+            : null;
+    }
+
     /**
      * Relationships
      */
