@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('lastname', 100);
             $table->string('gender', 50)->nullable();
             $table->string('avatar')->nullable();
+            $table->string('mobile_no')->nullable();
+            $table->string('sms_access_token')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

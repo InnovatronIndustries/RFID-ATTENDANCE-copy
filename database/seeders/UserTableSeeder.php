@@ -26,7 +26,8 @@ class UserTableSeeder extends Seeder
                 'gender'    => $obj->gender,
                 'avatar'    => $obj->avatar,
                 'email'     => $obj->email,
-                'password'  => $obj->password
+                'password'  => $obj->password,
+                'mobile_no' => $obj->mobile_no?? null
             ]);
         }
     }
