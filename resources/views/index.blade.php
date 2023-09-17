@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col imageColumn d-flex flex-column justify-content-center align-items-center">
       <div class="row">
-        <img class="image" src="/schools/stjoseph.png">
+        <img class="image" src="/schools/stjoseph.png" alt="" onerror="this.src='/schools/stjoseph.png'">
       </div>
       <div class="row">
         <form>
