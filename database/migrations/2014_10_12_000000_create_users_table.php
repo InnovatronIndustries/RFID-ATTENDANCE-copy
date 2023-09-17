@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->integer('role_id');
-            $table->integer('school_id');
-            $table->string('uid', 100)->comment('rfid unique identifier')->nullable();
+            $table->bigIncrements('id');
+            $table->foreignId('role_id')->constrained();
+            $table->foreignId('school_id')->nullable()->constrained();
+            $table->string('uid', 100)->comment('rfid unique identifier')->index()->nullable();
             $table->string('employee_code')->nullable();
             $table->string('department')->nullable();
             $table->string('position')->nullable();

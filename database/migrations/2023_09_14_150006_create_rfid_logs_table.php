@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('rfid_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('uid', 100)->comment('rfid unique identifier');
+            $table->string('uid', 100)->index()->comment('rfid unique identifier');
             $table->string('type', 50);
-            $table->timestamp('log_date');
+            $table->timestamp('log_date')->index();
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('school_id');
+            $table->foreignId('school_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->string('lrn', 100)->nullable();
             $table->string('student_no', 100)->nullable();

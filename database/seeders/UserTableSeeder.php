@@ -12,8 +12,6 @@ class UserTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \Schema::disableForeignKeyConstraints();
-
         \DB::table('users')->truncate();
         $json = storage_path() . "/json/users.json";
         $data = json_decode(file_get_contents($json, true));
@@ -32,7 +30,5 @@ class UserTableSeeder extends Seeder
                 'contact_no' => $obj->contact_no?? null
             ]);
         }
-
-        \Schema::enableForeignKeyConstraints();
     }
 }
