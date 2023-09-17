@@ -59,6 +59,12 @@
                     Employees
                 </a>
             </li>
+            <li class="{{ Request::is('file-uploads/uploadAvatarImages*') ? 'current' : '' }}">
+                <a href="{{ route('uploadAvatarImages.index') }}">
+                    <i class="icon-angle-right"></i>
+                    Avatar / Images
+                </a>
+            </li>
         </ul>
     </li>
 </ul>
