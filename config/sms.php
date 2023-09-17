@@ -27,7 +27,6 @@ return [
     'credentials' => [
         'app_id'     => env('SMS_APP_ID', 'eoezSz6MMeCb5cpd5gTMnGC8koGXSyGM'),
         'app_secret' => env('SMS_APP_SECRET', '0ccceeeb78eeb95c58e6440510f957c20d480a7ac49e8ea5c670a8387e2a80ca'),
-        ''
     ],
 
 ];

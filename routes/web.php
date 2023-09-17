@@ -13,7 +13,10 @@ use App\Http\Controllers\{
 };
 
 use App\Http\Controllers\CMS\{
-    DashboardController
+    DashboardController,
+    StudentMasterlistController,
+    UploadStudentListController,
+    UploadEmployeeListController
 };
 
 use App\Http\Controllers\Api\{
@@ -76,6 +79,15 @@ Route::domain('{school_name}.rfid-attendance.test')->group(function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+    Route::resource('student-masterlist', StudentMasterlistController::class)->except(['show']);
+
+    // file uploads
+    Route::prefix('file-uploads')->group(function () {
+        Route::resource('uploadStudentList', UploadStudentListController::class)->only(['index', 'store']);
+        Route::resource('uploadEmployeeList', UploadEmployeeListController::class)->only(['index', 'store']);
+    });
+   
 });
 
 // webhooks

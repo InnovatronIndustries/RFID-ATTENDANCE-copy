@@ -1,9 +1,10 @@
-<?php 
+<?php
 
 namespace App\Services;
 
 use Carbon\Carbon, Storage;
 use App\Models\{
+    Role,
     User
 };
 
@@ -19,12 +20,18 @@ class RfidService
      */
     public function getLogInformation(object $user, bool $responseType): array|null
     {
-        $level = $user->level?? 'Grade 1';
-        $section = $user->section?? 'Mapayapa';
-        $studentNo = $user->student_no?? '2021-2192';
-
         $user->avatar = $user->avatar ? Storage::disk('s3')->url('uploads/avatar/' . $user->avatar) : null;
-        $user->details = "$level - $section | Student/Employee No. $studentNo";
+        $user->details = 'Employee No. '.$user->employee_code;
+        if ($user->role_id == Role::STUDENT) {
+            $level = $user->student->level?? '';
+            $section = $user->student->section?? '';
+            $studentNo = $user->student->student_no?? null;
+
+            $details = "$level - $section";
+            $studentNo ? $details .= " | Student No. $studentNo" : '';
+
+            $user->details = $details;
+        }
         
         $currentDateTime = Carbon::now();
         $formattedDateTime = $currentDateTime->toIso8601String();

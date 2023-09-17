@@ -122,35 +122,73 @@
                                         name="email"
                                         value="{{ old('email') }}"
                                         placeholder="Enter Email Address"
-                                        required
                                     />
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="required">Password</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        value="{{ old('password') }}"
+                                    <label>Address</label>
+                                    <textarea
+                                        name="address"
+                                        id="address"
                                         class="form-control"
-                                        placeholder="**********"
-                                        required
-                                    />
+                                        cols="30"
+                                        rows="5"
+                                        style="resize: vertical;"
+                                    >{{ old('address') }}</textarea>
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="required">Confirm Password</label>
+                                    <label>Position</label>
                                     <input
-                                        type="password"
-                                        name="password_confirmation"
-                                        value=""
+                                        type="text"
                                         class="form-control"
-                                        placeholder="**********"
+                                        name="position"
+                                        value="{{ old('position') }}"
+                                        placeholder="Ex. Admin / Coordinator"
                                     />
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Employee Code</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="employee_code"
+                                        value="{{ old('employee_code') }}"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Contact Person</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="contact_person"
+                                        value="{{ old('contact_person') }}"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Contact No.</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="contact_no"
+                                        value="{{ old('contact_no') }}"
+                                    />
+                                </div>
+                            </div>
+                            
                         </div>
 
                         <hr />
