@@ -133,7 +133,64 @@
                                         name="email"
                                         value="{{ $user->email }}"
                                         placeholder="Enter Email Address"
-                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea
+                                        name="address"
+                                        id="address"
+                                        class="form-control"
+                                        cols="30"
+                                        rows="5"
+                                        style="resize: vertical;"
+                                    >{{ $user->address }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Position</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="position"
+                                        value="{{ $user->position }}"
+                                        placeholder="Ex. Admin / Coordinator"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Employee Code</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="employee_code"
+                                        value="{{ $user->employee_code }}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Contact Person</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="contact_person"
+                                        value="{{ $user->contact_person }}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Contact No.</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="contact_no"
+                                        value="{{ $user->contact_no }}"
                                     />
                                 </div>
                             </div>

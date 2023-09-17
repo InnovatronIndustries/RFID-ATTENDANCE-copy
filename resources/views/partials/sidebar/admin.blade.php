@@ -34,10 +34,31 @@
         </ul>
     </li>
 
-    <li class="{{ Request::is('students*') ? 'current' : '' }}">
-        <a href="#!">
+    <li class="{{ Request::is('student-masterlist*') ? 'current' : '' }}">
+        <a href="{{ route('student-masterlist.index') }}">
             <i class="icon-user"></i>
-            Manage Students*
+            Student Masterlist
         </a>
+    </li>
+
+    <li class="{{ Request::is('file-uploads*') ? 'current' : '' }}">
+        <a href="#!">
+            <i class="icon-file-text"></i>
+            File Uploads
+        </a>
+        <ul class="sub-menu">
+            <li class="{{ Request::is('file-uploads/uploadStudentList*') ? 'current' : '' }}">
+                <a href="{{ route('uploadStudentList.index') }}">
+                    <i class="icon-angle-right"></i>
+                    Students
+                </a>
+            </li>
+            <li class="{{ Request::is('file-uploads/uploadEmployeeList*') ? 'current' : '' }}">
+                <a href="{{ route('uploadEmployeeList.index') }}">
+                    <i class="icon-angle-right"></i>
+                    Employees
+                </a>
+            </li>
+        </ul>
     </li>
 </ul>

@@ -9,7 +9,7 @@
         "avatar": null,
         "email": "super.admin@gmail.com",
         "password": "password",
-        "mobile_no": null
+        "contact_no": null
     },
     {
         "role_id": 2,
@@ -21,7 +21,7 @@
         "avatar": null,
         "email": "school.admin@gmail.com",
         "password": "password",
-        "mobile_no": null
+        "contact_no": null
     },
     {
         "role_id": 3,
@@ -33,7 +33,7 @@
         "avatar": null,
         "email": "school.staff@gmail.com",
         "password": "password",
-        "mobile_no": null
+        "contact_no": null
     },
     {
         "role_id": 4,
@@ -45,7 +45,7 @@
         "avatar": null,
         "email": "school.faculty@gmail.com",
         "password": "password",
-        "mobile_no": null
+        "contact_no": null
     },
     {
         "role_id": 5,
@@ -57,7 +57,7 @@
         "avatar": null,
         "email": "student1@gmail.com",
         "password": "password",
-        "mobile_no": null
+        "contact_no": null
     },
     {
         "role_id": 5,
@@ -69,6 +69,6 @@
         "avatar": null,
         "email": "dennethd@gmail.com",
         "password": "password",
-        "mobile_no": "09776091583"
+        "contact_no": "09776091583"
     }
 ]

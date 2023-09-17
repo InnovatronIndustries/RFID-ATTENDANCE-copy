@@ -31,11 +31,6 @@ class UserRequest extends FormRequest
         $rules['avatar'] = 'nullable|mimes:jpeg,jpg,png,png,bmp|max:4096';
         $rules['email'] = 'nullable|email|unique:users,email'.$userId;
 
-        if (!$userId) {
-            $rules['password'] = 'required|required_with:password_confirmation';
-            $rules['password_confirmation'] = 'same:password|min:6';
-        }
-
         return $rules;
     }
 }

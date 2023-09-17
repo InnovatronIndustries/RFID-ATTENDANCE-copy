@@ -14,16 +14,22 @@ use App\Models\{
 class UserController extends Controller
 {
     private $baseView;
+    private $excludedRoleIds;
 
     public function __construct()
     {
         $this->baseView = 'cms/access-management/users';
+
+        $this->excludedRoleIds = [
+            Role::SUPER_ADMIN,
+            Role::STUDENT
+        ];
     }
 
     public function index()
     {
-        $roles = Role::whereNotIn('id', [Role::SUPER_ADMIN])->oldest('name')->get();
-        $users = User::whereNotIn('role_id', [Role::SUPER_ADMIN])
+        $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
+        $users = User::whereNotIn('role_id', $this->excludedRoleIds)
             ->oldest('firstname')
             ->withTrashed()
             ->get()
@@ -37,7 +43,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::whereNotIn('id', [Role::SUPER_ADMIN])->oldest('name')->get();
+        $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
         return view($this->baseView . '/create', compact('roles'));
     }
 
@@ -60,8 +66,13 @@ class UserController extends Controller
         $user->lastname = $request->lastname;
         $user->avatar = $finalAvatar;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = $request->password?? 'password';
         $user->uid = $request->uid;
+        $user->address = $request->address?? null;
+        $user->position = $request->position?? null;
+        $user->employee_code = $request->employee_code?? null;
+        $user->contact_person = $request->contact_person?? null;
+        $user->contact_no = $request->contact_no?? null;
         $user->save();
 
         return back()->with('success', 'User has been added successfully.');
@@ -69,7 +80,7 @@ class UserController extends Controller
 
     public function edit(string $id)
     {
-        $roles = Role::whereNotIn('id', [Role::SUPER_ADMIN])->oldest('name')->get();
+        $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
         $user = User::findOrFail($id);
 
         return view($this->baseView . '/edit', compact('roles', 'user'));
@@ -101,6 +112,11 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->uid = $request->uid;
+        $user->address = $request->address?? null;
+        $user->position = $request->position?? null;
+        $user->employee_code = $request->employee_code?? null;
+        $user->contact_person = $request->contact_person?? null;
+        $user->contact_no = $request->contact_no?? null;
         $user->save();
 
         return back()->with('success', 'User has been updated successfully.');

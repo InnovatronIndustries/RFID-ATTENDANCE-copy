@@ -18,16 +18,16 @@ class UserTableSeeder extends Seeder
 
         foreach ($data as $obj) {
             \App\Models\User::create([
-                'role_id'   => $obj->role_id,
-                'school_id' => $obj->school_id,
-                'uid'       => $obj->uid,
-                'firstname' => $obj->firstname,
-                'lastname'  => $obj->lastname,
-                'gender'    => $obj->gender,
-                'avatar'    => $obj->avatar,
-                'email'     => $obj->email,
-                'password'  => $obj->password,
-                'mobile_no' => $obj->mobile_no?? null
+                'role_id'    => $obj->role_id,
+                'school_id'  => $obj->school_id,
+                'uid'        => $obj->uid,
+                'firstname'  => $obj->firstname,
+                'lastname'   => $obj->lastname,
+                'gender'     => $obj->gender,
+                'avatar'     => $obj->avatar,
+                'email'      => $obj->email,
+                'password'   => $obj->password,
+                'contact_no' => $obj->contact_no?? null
             ]);
         }
     }
