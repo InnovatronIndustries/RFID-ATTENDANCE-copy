@@ -32,6 +32,7 @@ class EmployeesImport implements ToModel, WithHeadingRow
         }
 
         $roleID = Role::STAFF;
+        $avatar = $row['lastname'].'_'.$row['firstname'].'.jpg';
 
         return User::updateOrCreate([
             'employee_code'  => $row['employee_code']
@@ -46,14 +47,13 @@ class EmployeesImport implements ToModel, WithHeadingRow
             'middlename'     => $row['middle_name']?? $row['middlename']?? null,
             'lastname'       => $row['lastname'],
             'gender'         => 'Male',
-            'avatar'         => null,
+            'avatar'         => $avatar,
             'contact_person' => $row['contact_person']?? null,
             'contact_no'     => $row['contact_no']?? $row['mobile_phone']?? null,
             'birthdate'      => null,
             'address'        => $row['address']?? null,
             'email'          => $row['email']?? null,
-            'password'       => 'password',
-            'avatar'         => 'student.png'
+            'password'       => 'password'
         ]);
     }
 

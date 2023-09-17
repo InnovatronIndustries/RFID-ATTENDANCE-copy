@@ -16,7 +16,8 @@ use App\Http\Controllers\CMS\{
     DashboardController,
     StudentMasterlistController,
     UploadStudentListController,
-    UploadEmployeeListController
+    UploadEmployeeListController,
+    UploadAvatarImagesController
 };
 
 use App\Http\Controllers\Api\{
@@ -86,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('file-uploads')->group(function () {
         Route::resource('uploadStudentList', UploadStudentListController::class)->only(['index', 'store']);
         Route::resource('uploadEmployeeList', UploadEmployeeListController::class)->only(['index', 'store']);
+        Route::resource('uploadAvatarImages', UploadAvatarImagesController::class)->only(['index', 'store']);
     });
    
 });

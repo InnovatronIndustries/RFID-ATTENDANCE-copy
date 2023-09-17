@@ -24,7 +24,7 @@ class UploadStudentListController extends Controller
 
     public function store(Request $request)
     {
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
 
@@ -34,11 +34,11 @@ class UploadStudentListController extends Controller
 
             Excel::import(new StudentsImport($schoolId), $file, $sheetName);
 
-            // DB::commit();
+            DB::commit();
             return back()->with('success', 'File has been uploaded successfully.');
 
         } catch (\Exception $e) {
-            // DB::rollback();
+            DB::rollback();
             return back()->with('error', $e->getMessage());
         }
     }

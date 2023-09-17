@@ -38,8 +38,8 @@ class StudentsImport implements ToModel, WithHeadingRow
         $section = null;
         if ($row['grade_level_section']) {
             $string = explode("-", $row['grade_level_section']);
-            $level = $string[0];
-            $section = $string[1];
+            $level = $string[0]?? null;
+            $section = $string[1]?? null;
         }
 
         $email = $row['email_address']?? $row['email_adress']?? null;
