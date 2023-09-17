@@ -52,26 +52,32 @@ class StudentsImport implements ToModel, WithHeadingRow
         $contactPerson = stripos($row['contact_person'], 'VLOOKUP') !== false ? null : $row['contact_person']?? null;
         $contactNo = stripos($row['contact_number'], 'VLOOKUP') !== false ? null : $row['contact_number']?? null;
 
+        $lastName = $row['last_name']?? $row['lastname']?? null;
+        $firstName = $row['first_name']?? $row['fisrt_name']?? null;
+        $middleName = $row['middle_name']?? $row['middlename']?? null;
+
+        $avatar = $lastName.'_'.$firstName.'.jpg';
+
         // check if student already exists
         $user = User::updateOrCreate([
-            'lastname'       => $row['last_name']?? $row['lastname']?? null,
-            'firstname'      => $row['first_name']?? $row['fisrt_name']?? null,
-            'middlename'     => $row['middle_name']?? $row['middlename']?? null
+            'lastname'       => $lastName,
+            'firstname'      => $firstName,
+            'middlename'     => $middleName
         ], [
             'role_id'        => $roleID,
             'school_id'      => $this->schoolId,
             'email'          => $email,
             'password'       => 'password',
             'gender'         => 'Male',
-            'lastname'       => $row['last_name']?? $row['lastname']?? null,
-            'firstname'      => $row['first_name']?? $row['fisrt_name']?? null,
-            'middlename'     => $row['middle_name']?? $row['middlename']?? null,
+            'lastname'       => $lastName,
+            'firstname'      => $firstName,
+            'middlename'     => $middleName,
             'suffix'         => $row['suffix']?? null,
             'contact_person' => $contactPerson,
             'contact_no'     => $contactNo,
             'uid'            => $row['rfid']?? null,
             'birthdate'      => $row['birthdate']?? null,
-            'avatar'         => 'student.png'
+            'avatar'         => $avatar
         ]);
 
         Student::updateOrCreate([
