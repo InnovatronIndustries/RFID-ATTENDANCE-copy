@@ -17,7 +17,7 @@
       </div>
       <div class="row">
         <form>
-          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 1;" id="uidInput">
+          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 0;" id="uidInput">
         </form>
       </div>
     </div>
