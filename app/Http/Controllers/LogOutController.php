@@ -38,8 +38,8 @@ class LogOutController extends Controller
             $logDate = Carbon::parse($latestRecord->created_at, 'Asia/Manila');
             $timeDifferenceInSeconds = $currentDateTime->diffInSeconds($logDate);
 
-            if ($timeDifferenceInSeconds < 5) {
-                // The time difference is less than 3 seconds, don't log out
+            if ($timeDifferenceInSeconds < 300) {
+                // The time difference is less than 5 minutes, don't log out
                 return response()->json(['success' => false]);
             }
         }
