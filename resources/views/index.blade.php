@@ -147,32 +147,37 @@
       url: '/get-login-time/' + uidToCheck,
       data: { uid: uidToCheck },
       success: function (data) {
-        var logDate = new Date(data.log_date);
-        var options = {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: true,
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric'
-        };
-        var student = data.user;
-        $('.schoolName').text(student.school);
-        $('#current-time').css('display', 'none');
-        $('#student-name').text(`${student.firstname} ${student.middlename?? ''} ${student.lastname}`);
-        $('#current-date').css('display', 'none');
-        $('.schoolAddress').text(student.details);
-        $('.image').attr('src', student.avatar);
-        $('.image').css('border-radius', '50%');
-        $('#additionalInfo').css('display', 'block');
-        setInterval(function () {
-          displayTimeZone();
-        }, 1000);
-        var formattedDateTime = logDate.toLocaleString('en-US', options);
-        $('#status').text("Log In: " + formattedDateTime);
-        // Log the user in
-        login(uidToCheck);
+
+        login(uidToCheck, function (result) {
+
+          if (result) {
+            var logDate = new Date(data.log_date);
+            var options = {
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: true,
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric'
+            };
+            var student = data.user;
+            $('.schoolName').text(student.school);
+            $('#current-time').css('display', 'none');
+            $('#student-name').text(`${student.firstname} ${student.middlename?? ''} ${student.lastname}`);
+            $('#current-date').css('display', 'none');
+            $('.schoolAddress').text(student.details);
+            $('.image').attr('src', student.avatar);
+            $('.image').css('border-radius', '50%');
+            $('#additionalInfo').css('display', 'block');
+            setInterval(function () {
+              displayTimeZone();
+            }, 1000);
+            var formattedDateTime = logDate.toLocaleString('en-US', options);
+            $('#status').text("Log In: " + formattedDateTime);
+          }
+        });
+
       },
       error: function (xhr) {
         console.error(xhr.responseText);
@@ -180,7 +185,7 @@
     });
   }
 
-  function login(uid) {
+  function login(uid, callback) {
     $.ajax({
       type: 'POST',
       url: '/rfid-login',
@@ -188,12 +193,25 @@
       success: function (response) {
         if (response.success) {
           console.log('Login successful');
+          callback(true);
         } else {
           console.error('Already Logged In');
+
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Login Failed',
+            text: 'User has recently logged out. Please try again after 5 minutes.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          callback(false);
         }
       },
       error: function (xhr) {
         console.error("Login request error: " + xhr.responseText);
+        callback(false);
       }
     });
   }
@@ -245,20 +263,30 @@
       success: function (response) {
         if (response.success) {
           console.log('Logout successful');
-                var logDate = new Date;
-                var options = {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: true,
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric'
-                };
-                var formattedDateTime = logDate.toLocaleString('en-US', options);
-                $('#status').text("Log Out: " + formattedDateTime);
+          var logDate = new Date;
+          var options = {
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: true,
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric'
+          };
+          var formattedDateTime = logDate.toLocaleString('en-US', options);
+          $('#status').text("Log Out: " + formattedDateTime);
         } else {
           console.error('Logout failed');
+
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Logout Failed',
+            text: 'User has recently logged in. Please try again after 5 minutes.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
         }
       },
       error: function (xhr) {
