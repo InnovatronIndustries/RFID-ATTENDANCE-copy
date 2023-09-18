@@ -17,13 +17,13 @@
       </div>
       <div class="row">
         <form>
-          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 0;" id="uidInput">
+          <input type="text" name="text" class="inputUID" placeholder="UID" style = "opacity: 1;" id="uidInput">
         </form>
       </div>
     </div>
     <div class="col detailsColumn d-flex justify-content-center align-items-center">
       <div class="detailsContainer">
-        <h1 class="schoolName" style="font-weight: 700; margin-top: 100px;">Saint Joseph College of Novaliches</h1>
+        <h1 class="schoolName" style="font-weight: 700; margin-top: 100px;">St. Joseph College of Novaliches Inc.</h1>
         <h1 id="current-time" style="font-weight: 700;"></h1>
         <h1 id="student-name" style="font-weight: 700;"></h1>
         <h3 id="current-date" style="font-weight: 500;"></h3>
