@@ -39,7 +39,7 @@ class EmployeesImport implements ToModel, WithHeadingRow
         ], [
             'role_id'        => $roleID,
             'school_id'      => $this->schoolId,
-            'uid'            => null,
+            'uid'            => $row['rfid']?? null,
             'employee_code'  => $row['employee_code']?? null,
             'department'     => $row['department']?? null,
             'position'       => $row['position']?? null,
