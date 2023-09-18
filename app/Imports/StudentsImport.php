@@ -37,9 +37,12 @@ class StudentsImport implements ToModel, WithHeadingRow
         $level = null;
         $section = null;
         if ($row['grade_level_section']) {
-            $string = explode("-", $row['grade_level_section']);
-            $level = $string[0]?? null;
-            $section = $string[1]?? null;
+            // Split the input string by the first occurrence of "-"
+            $parts = explode("-", $row['grade_level_section'], 2);
+            if (count($parts) == 2) {
+                $level = isset($parts[0]) ? trim($parts[0]) : null;
+                $section = isset($parts[1]) ? trim($parts[1]) : null;
+            }
         }
 
         $email = $row['email_address']?? $row['email_adress']?? null;

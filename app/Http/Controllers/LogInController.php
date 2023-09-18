@@ -32,13 +32,13 @@ class LogInController extends Controller
         }
 
         // Get the latest record for the specified UID
-        $latestRecord = RfidLog::whereUidAndType($uid, 'In')->latest('created_at')->first();
+        $latestRecord = RfidLog::whereUidAndType($uid, 'Out')->latest('created_at')->first();
 
         if ($latestRecord) {
             $logDate = Carbon::parse($latestRecord->created_at, 'Asia/Manila');
             $timeDifferenceInSeconds = $currentDateTime->diffInSeconds($logDate);
 
-            if ($timeDifferenceInSeconds < 3) {
+            if ($timeDifferenceInSeconds < 5) {
                 // The time difference is less than 3 seconds, don't log out
                 return response()->json(['success' => false]);
             }
