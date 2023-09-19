@@ -43,12 +43,33 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-
   let refreshTimeoutId;
+  const userTime = new Date().getTime();
+  const serverTime = `{{ $serverTimeInMilliseconds }}`;
+  const timeDifference = Math.abs(serverTime - userTime);
+  const threshold = 120000; // 1 minute in milliseconds
 
   $(document).ready(function () {
+    checkSystemClockSettings();
     $('#uidInput').focus();
   });
+
+  function checkSystemClockSettings() {
+    if (timeDifference > threshold) {
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'System time is not up to date. <br /> Please update your device clock settings to proceed.',
+        showConfirmButton: true,
+        confirmButtonText: 'Refresh Page',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+      });
+    }
+  }
 
   function getCurrentTimeInTimeZone(timezone) {
     const options = {
@@ -117,7 +138,6 @@
     }, 10000);
   }
 
-  
   function handleUIDCheck(uidToCheck) {
     $.ajax({
         type: 'POST',
