@@ -18,9 +18,9 @@
         </a>
     </li>
     <li class="{{ Request::is('access-management/users*') ? 'current' : '' }}">
-        <a href="#!">
+        <a href="{{ route('users.index') }}">
             <i class="icon-user"></i>
-            System Users*
+            System Users
         </a>
     </li>
 </ul>
