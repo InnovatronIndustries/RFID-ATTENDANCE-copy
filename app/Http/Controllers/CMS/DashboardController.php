@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
 use App\Models\{
     Role,
     User
@@ -20,9 +21,21 @@ class DashboardController extends Controller
 
     public function __invoke()
     {
-        $totalUsers = User::where('role_id', '<>', Role::SUPER_ADMIN)->count();
-        $totalStudents = User::whereRoleId(Role::STUDENT)->count();
+        $schoolID = $this->currentSchoolID();
+        $roleID = Auth::user()->role_id;
 
-        return view($this->baseView . '/index', compact('totalUsers', 'totalStudents'));
+        $queryCondition = function ($q) use ($roleID, $schoolID) {
+            if ($roleID !== Role::SUPER_ADMIN) {
+                return $q->where('school_id', $schoolID);
+            }
+            
+            return $q;
+        };
+
+        $totalUsers = User::where('role_id', '<>', Role::SUPER_ADMIN)->when($queryCondition)->count();
+        $totalStudents = User::whereRoleId(Role::STUDENT)->when($queryCondition)->count();
+        $totalEmployees = User::whereRoleId(Role::STAFF)->when($queryCondition)->count();
+
+        return view($this->baseView . '/index', compact('totalUsers', 'totalStudents', 'totalEmployees'));
     }
 }

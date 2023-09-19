@@ -17,7 +17,8 @@ use App\Http\Controllers\CMS\{
     StudentMasterlistController,
     UploadStudentListController,
     UploadEmployeeListController,
-    UploadAvatarImagesController
+    UploadAvatarImagesController,
+    SchoolController
 };
 
 use App\Http\Controllers\Api\{
@@ -89,6 +90,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('uploadEmployeeList', UploadEmployeeListController::class)->only(['index', 'store']);
         Route::resource('uploadAvatarImages', UploadAvatarImagesController::class)->only(['index', 'store']);
     });
+
+    Route::resource('manage-schools', SchoolController::class)->except(['show']);
    
 });
 

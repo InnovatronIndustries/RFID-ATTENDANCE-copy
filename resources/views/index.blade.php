@@ -13,7 +13,12 @@
   <div class="row">
     <div class="col imageColumn d-flex flex-column justify-content-center align-items-center">
       <div class="row">
-        <img class="image" src="/schools/stjoseph.png" alt="" onerror="this.src='/schools/stjoseph.png'">
+        <img
+          class="image"
+          src="{{ $school->logo }}"
+          alt=""
+          onerror="this.src='{{ $school->logo }}'"
+        />
       </div>
       <div class="row">
         <form>
@@ -23,15 +28,14 @@
     </div>
     <div class="col detailsColumn d-flex justify-content-center align-items-center">
       <div class="detailsContainer">
-        <h1 class="schoolName" style="font-weight: 700; margin-top: 100px;">St. Joseph College of Novaliches Inc.</h1>
+        <h1 class="schoolName" style="font-weight: 700; margin-top: 100px;">{{ $school->name }}</h1>
         <h1 id="current-time" style="font-weight: 700;"></h1>
         <h1 id="student-name" style="font-weight: 700;"></h1>
         <h3 id="current-date" style="font-weight: 500;"></h3>
         <h3 id="status" style="font-weight: 500;"></h3>
-        <h4 class="schoolAddress" style="font-weight: 300; margin-top: 65px">Rainbow Village 5, Congressional Rd.,
-          Novaliches, Caloocan City</h4>
+        <h4 class="schoolAddress" style="font-weight: 300; margin-top: 65px">{{ $school->address }}</h4>
         <div id="additionalInfo" style="display: none;"></div>
-        <img id="apLogo" src="ap.png" style="margin-top: 150px">
+        <img id="apLogo" src="ap.png" alt="logo" style="margin-top: 150px" />
       </div>
     </div>
   </div>

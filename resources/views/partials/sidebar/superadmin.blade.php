@@ -5,22 +5,22 @@
             Dashboard
         </a>
     </li>
-    <li class="{{ Request::is('super-admin/roles*') ? 'current' : '' }}">
+    <li class="{{ Request::is('manage-schools*') ? 'current' : '' }}">
+        <a href="{{ route('manage-schools.index') }}">
+            <i class="icon-sitemap"></i>
+            Manage Schools
+        </a>
+    </li>
+    <li class="{{ Request::is('access-management/roles*') ? 'current' : '' }}">
         <a href="{{ route('roles.index') }}">
             <i class="icon-group"></i>
             Roles
         </a>
     </li>
-    <li class="{{ Request::is('admin/users*') ? 'current' : '' }}">
+    <li class="{{ Request::is('access-management/users*') ? 'current' : '' }}">
         <a href="#!">
             <i class="icon-user"></i>
             System Users*
-        </a>
-    </li>
-    <li class="{{ Request::is('admin/schools*') ? 'current' : '' }}">
-        <a href="#!">
-            <i class="icon-sitemap"></i>
-            Manage Schools*
         </a>
     </li>
 </ul>

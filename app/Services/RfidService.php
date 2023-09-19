@@ -26,9 +26,11 @@ class RfidService
             $level = $user->student->level?? '';
             $section = $user->student->section?? '';
             $studentNo = $user->student->student_no?? null;
+            $lrn = $user->student->lrn?? null;
 
             $details = "$level - $section";
             $studentNo ? $details .= " | Student No. $studentNo" : '';
+            $lrn && !$studentNo ? $details .= " | LRN: $lrn" : '';
 
             $user->details = $details;
         }
