@@ -25,6 +25,11 @@ use App\Http\Controllers\Api\{
     Integrations\SmsIntegrationController
 };
 
+use App\Http\Controllers\DataTables\{
+    UserDataTableController,
+    StudentMasterlistDataTableController
+};
+
 Route::get('/', RfidController::class);
 
 Route::get('/admin',function(){
@@ -92,7 +97,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::resource('manage-schools', SchoolController::class)->except(['show']);
-   
+    
+    // datatables
+    Route::resource('user-dt', UserDataTableController::class)->only(['index']);
+    Route::resource('student-masterlist-dt', StudentMasterlistDataTableController::class)->only(['index']);
 });
 
 // webhooks

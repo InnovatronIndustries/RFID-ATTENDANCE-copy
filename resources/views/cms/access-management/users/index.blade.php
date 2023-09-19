@@ -79,28 +79,7 @@
                                     <th>Updated At</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyData">
-                                @foreach ($users as $key => $user)
-                                <tr>
-                                    <td>{{ $user->avatar }}</td>
-                                    <td>{{ $user->uid }}</td>
-                                    <td>
-                                        @if($user->is_active)
-                                            <a href="{{ route('users.edit', ['user' => $user->id]) }}">{{ $user->fullname }}</a>
-                                        @else
-                                            {{ $user->fullname }}
-                                        @endif
-                                    </td>
-                                    <td>{{ $user->role->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->school_id }}</td>
-                                    <td>{{ $user->school->name?? 'N/A' }}</td>
-                                    <td>{{ $user->status }}</td>
-                                    <td>{{ $user->formatted_created_at }}</td>
-                                    <td>{{ $user->formatted_updated_at }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
+                            <tbody id="tbodyData"></tbody>
                         </table>
                     </div>
                 </div>
@@ -117,6 +96,8 @@
         autoWidth: false,
         processing: false,
         language: { processing: " "},
+        serverSide: false,
+        ajax: '{{ route('user-dt.index') }}',
         columns: [
             {
                 data: 'avatar',
@@ -135,7 +116,7 @@
             },
             { data: 'uid', name: 'uid' },
             { data: 'fullname', name: 'fullname' },
-            { data: 'role', name: 'role' },
+            { data: 'role_name', name: 'role_name' },
             { data: 'email', name: 'email' },
             { data: 'school_id', name: 'school_id' },
             { data: 'school_name', name: 'school_name' },

@@ -29,24 +29,12 @@ class UserController extends Controller
 
     public function index()
     {
-        $schoolID = $this->currentSchoolID();
         $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
-
         $schools = Auth::user()->role_id == Role::SUPER_ADMIN
             ? School::oldest('name')->get()
             : [];
 
-        $users = User::whereNotIn('role_id', $this->excludedRoleIds)
-            ->when(Auth::user()->role_id !== Role::SUPER_ADMIN, fn ($q) => $q->where('school_id', $schoolID))
-            ->oldest('firstname')
-            ->withTrashed()
-            ->get()
-            ->map(function ($data) {
-                $data->avatar = $data->avatar ? Storage::disk('s3')->url('uploads/avatar/' . $data->avatar) : null;
-                return $data;
-            });
-
-        return view($this->baseView . '/index', compact('schools', 'roles', 'users'));
+        return view($this->baseView . '/index', compact('schools', 'roles'));
     }
 
     public function create()
