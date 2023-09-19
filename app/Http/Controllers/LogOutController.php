@@ -77,7 +77,8 @@ class LogOutController extends Controller
     {
         $latestRecord = RfidLog::whereUid($request->uid)->latest('created_at')->first();
 
-        if (!$latestRecord) {
+        // prevent logout if the user forgot to logout on the previous day.. new logs should be considered as "In"
+        if (!$latestRecord || !Carbon::parse($latestRecord->created_at)->isToday()) {
             return response()->json(['success' => false]);
         }
 
