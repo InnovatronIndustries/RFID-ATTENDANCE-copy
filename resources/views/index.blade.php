@@ -50,7 +50,7 @@
   const threshold = 120000; // 1 minute in milliseconds
 
   $(document).ready(function () {
-    checkSystemClockSettings();
+    // checkSystemClockSettings();
     $('#uidInput').focus();
   });
 
