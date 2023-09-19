@@ -36,6 +36,24 @@
                         @csrf
                         <div class="row">
 
+                            @if(Auth::user()->role_id == 1)
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="required">School</label>
+                                    <select name="school_id" id="school_id" class="form-control select2-general" required>
+                                        <option value="">-Select School-</option>
+                                        <option value="0">N/A</option>
+                                        @foreach($schools as $school)
+                                            <option value="{{$school->id}}"
+                                                {{ old('school_id') == $school->id ? 'selected' : '' }}>
+                                                {{ $school->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @endif
+
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -109,6 +127,19 @@
                                         value="{{ old('lastname') }}"
                                         placeholder="Last Name"
                                         required
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Username (Optional)</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="username"
+                                        value="{{ old('username') }}"
+                                        placeholder="Enter Username"
                                     />
                                 </div>
                             </div>

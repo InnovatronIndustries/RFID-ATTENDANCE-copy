@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use Auth, Storage;
 use App\Models\{
     Role,
+    School,
     User
 };
 
@@ -28,8 +29,15 @@ class UserController extends Controller
 
     public function index()
     {
+        $schoolID = $this->currentSchoolID();
         $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
+
+        $schools = Auth::user()->role_id == Role::SUPER_ADMIN
+            ? School::oldest('name')->get()
+            : [];
+
         $users = User::whereNotIn('role_id', $this->excludedRoleIds)
+            ->when(Auth::user()->role_id !== Role::SUPER_ADMIN, fn ($q) => $q->where('school_id', $schoolID))
             ->oldest('firstname')
             ->withTrashed()
             ->get()
@@ -38,18 +46,22 @@ class UserController extends Controller
                 return $data;
             });
 
-        return view($this->baseView . '/index', compact('roles', 'users'));
+        return view($this->baseView . '/index', compact('schools', 'roles', 'users'));
     }
 
     public function create()
     {
         $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
-        return view($this->baseView . '/create', compact('roles'));
+        $schools = Auth::user()->role_id == Role::SUPER_ADMIN
+            ? School::oldest('name')->get()
+            : [];
+
+        return view($this->baseView . '/create', compact('roles', 'schools'));
     }
 
     public function store(UserRequest $request)
     {
-        $schoolID = $this->currentSchoolID();
+        $schoolID = $request->school_id?? $this->currentSchoolID();
 
         $finalAvatar = 'student.png';
         if ($request->hasFile('avatar')) {
@@ -59,12 +71,13 @@ class UserController extends Controller
         }
 
         $user = new User;
-        $user->school_id = $schoolID;
+        $user->school_id = $schoolID == 0 ? null : $schoolID;
         $user->role_id = $request->role_id;
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
         $user->lastname = $request->lastname;
         $user->avatar = $finalAvatar;
+        $user->username = $request->username?? null;
         $user->email = $request->email;
         $user->password = $request->password?? 'password';
         $user->uid = $request->uid;
@@ -81,14 +94,19 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $roles = Role::whereNotIn('id', $this->excludedRoleIds)->oldest('name')->get();
+        $schools = Auth::user()->role_id == Role::SUPER_ADMIN
+            ? School::oldest('name')->get()
+            : [];
+
         $user = User::findOrFail($id);
 
-        return view($this->baseView . '/edit', compact('roles', 'user'));
+        return view($this->baseView . '/edit', compact('roles', 'schools', 'user'));
     }
 
     public function update(UserRequest $request, string $id)
     {
         $user = User::findOrFail($id);
+        $schoolID = $request->school_id?? $this->currentSchoolID();
 
         $finalAvatar = $user->avatar;
         if ($request->hasFile('avatar')) {
@@ -104,11 +122,13 @@ class UserController extends Controller
             $finalAvatar = basename($filePath);
         }
 
+        $user->school_id = $schoolID == 0 ? null : $schoolID;
         $user->role_id = $request->role_id;
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
         $user->lastname = $request->lastname;
         $user->avatar = $finalAvatar;
+        $user->username = $request->username?? null;
         $user->email = $request->email;
         $user->password = $request->password;
         $user->uid = $request->uid;

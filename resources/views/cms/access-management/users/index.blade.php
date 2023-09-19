@@ -38,6 +38,19 @@
                         <div class="col-md-12">
                             <h5>Filter by:</h5>
                         </div>
+
+                        @if(Auth::user()->role_id == 1)
+                        <div class="col-lg-2 col-md-3">
+                            <div class="form-group">
+                                <select id="tbFilterBySchool" class="form-control">
+                                    <option value="">-Select School-</option>
+                                    @foreach($schools as $school)
+                                        <option value="{{$school->id}}">{{$school->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endif
         
                         <div class="col-lg-2 col-md-3">
                             <div class="form-group">
@@ -176,6 +189,10 @@
                 }
             }
         ]
+    });
+
+    $('#tbFilterBySchool').on('change', function() {
+        tbl.columns(5).search(this.value).draw();
     });
 
     $('#tbFilterByRole').on('change', function() {
