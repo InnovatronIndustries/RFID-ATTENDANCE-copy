@@ -39,7 +39,16 @@
         <div class="form-group">
             <div class="input-icon">
                 <i class="icon-user"></i>
-                <input type="text" name="email" value="{{old('email')}}" class="form-control" placeholder="Email Address" autofocus="autofocus" data-rule-required="true" data-msg-required="Please enter your username." />
+                <input
+                    type="text"
+                    name="loginDual"
+                    value="{{ old('loginDual') }}"
+                    class="form-control"
+                    placeholder="Email / Username"
+                    autofocus="autofocus"
+                    data-rule-required="true"
+                    data-msg-required="Please enter your username or email."
+                />
             </div>
         </div>
         <div class="form-group">

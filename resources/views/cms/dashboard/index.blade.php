@@ -38,6 +38,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content">
+                    <div class="d-flex justify-content-between">
+                        <div class="title">Total Employees</div>
+                    </div>
+                    <div class="value" style="margin-top: 5px;">{{ $totalEmployees }}</div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
