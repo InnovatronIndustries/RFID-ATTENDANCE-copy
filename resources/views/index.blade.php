@@ -39,6 +39,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+
+  let refreshTimeoutId;
+
   $(document).ready(function () {
     $('#uidInput').focus();
   });
@@ -84,12 +87,6 @@
     return timeDiff < oneHour;
   }
 
-  function autoReloadPage() {
-    location.reload();
-  }
-
-  setInterval(autoReloadPage, 1800000);
-
   $('form').submit(function (e) {
     e.preventDefault();
     var uidToCheck = $('#uidInput').val();
@@ -97,7 +94,27 @@
 
     $('#uidInput').val('');
     $('#uidInput').focus();
+
+    refreshPageAfterTap();
   });
+
+  function refreshPageAfterTap() {
+    // check if a refresh is already scheduled within the next 5 seconds
+    if (refreshTimeoutId) {
+      // cancel the previous refresh
+      console.log('cancelled previous refresh..');
+      clearTimeout(refreshTimeoutId);
+    }
+
+    // schedule a new refresh after 10 seconds
+    refreshTimeoutId = setTimeout(function () {
+      console.log('no activity detected.. reloading page.');
+      location.reload();
+    }, 10000);
+  }
+
+  // call the function to initiate the refresh after 5 seconds
+  refreshPageAfterTap();
   
   function handleUIDCheck(uidToCheck) {
     $.ajax({
@@ -131,9 +148,9 @@
         data: { uid: uidToCheck },
         success: function (response) {
             if (response.success) {
-               getLogoutTime(uidToCheck);
+              getLogoutTime(uidToCheck);
             } else {
-                getLoginTime(uidToCheck);
+              getLoginTime(uidToCheck);
             }
         },
         error: function (xhr) {
