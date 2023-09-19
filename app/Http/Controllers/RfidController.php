@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Storage;
+use \Carbon\Carbon, Storage;
 use App\Models\{
     School
 };
@@ -30,7 +30,10 @@ class RfidController extends Controller
 
         $school->logo = $school->logo ? $this->s3LogoPath . $school->logo : $this->s3LogoPath . 'ap-logo.png';
         $school->banner = $school->banner ? $this->s3BannerPath . $school->banner : asset('bg.jpg');
+
+        // get the current server time in milliseconds
+        $serverTimeInMilliseconds = Carbon::now()->timestamp * 1000;
         
-        return view('index', compact('school'));
+        return view('index', compact('school', 'serverTimeInMilliseconds'));
     }
 }
