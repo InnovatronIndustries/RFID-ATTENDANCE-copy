@@ -46,20 +46,7 @@
                                 <th>Created At</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyData">
-                            @foreach($students as $key => $student)
-                            <tr>
-                                <td>{{ $student->avatar }}</td>
-                                <td>{{ $student->user->fullname }}</td>
-                                <td>{{ $student->edit_link }}</td>
-                                <td>{{ $student->user->uid }}</td>
-                                <td>{{ $student->level_section }}</td>
-                                <td>{{ $student->user->email }}</td>
-                                <td>{{ $student->user->contact_no }}</td>
-                                <td>{{ $student->user->formatted_created_at }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
+                        <tbody id="tbodyData"></tbody>
                     </table>
                 </div>
             </div>
@@ -75,6 +62,7 @@
         autoWidth: false,
         processing: false,
         serverSide: false,
+        ajax: '{{ route('student-masterlist-dt.index') }}',
         language: { processing: " "},
         columns: [
             {
@@ -90,19 +78,19 @@
                     return avatar;
                 }
             },
-            { data: 'fullname', name: 'user.fullname'},
+            { data: 'fullname', name: 'fullname'},
             {
                 data: 'student_links',
                 name: 'student_links',
                 render: function(data, type, row) {
-                    return `<a href="${data}">${row.fullname}</a>`;
+                    return `<a href="${data.edit_link}">${data.fullname}</a>`;
                 }
             },
-            { data: 'uid', name: 'user.uid'},
+            { data: 'user.uid', name: 'user.uid'},
             { data: 'level_section', name: 'level_section'},
-            { data: 'email', name: 'user.email'},
-            { data: 'contact_no', name: 'user.contact_no'},
-            { data: 'formatted_created_at', name: 'user.formatted_created_at'},
+            { data: 'user.email', name: 'user.email'},
+            { data: 'user.contact_no', name: 'user.contact_no'},
+            { data: 'formatted_created_at', name: 'formatted_created_at'},
         ],
         // order: [[7, 'desc']],
         columnDefs: [

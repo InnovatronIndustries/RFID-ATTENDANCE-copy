@@ -22,18 +22,7 @@ class StudentMasterlistController extends Controller
 
     public function index()
     {
-        $schoolID = $this->currentSchoolID();
-        $students = Student::whereSchoolId($schoolID)
-            ->with('user:id,avatar,uid,firstname,middlename,lastname,contact_no,email,created_at')
-            ->get()
-            ->map(function ($data) {
-                $data->avatar = $data->user->avatar ? Storage::disk('s3')->url('uploads/avatar/' . $data->user->avatar) : null;
-                $data->level_section = $data->level.' - '.$data->section;
-                $data->edit_link = route('student-masterlist.edit', ['student_masterlist' => $data->id]);
-                return $data;
-            });
-
-        return view($this->baseView . '/index', compact('students'));
+        return view($this->baseView . '/index');
     }
 
     public function create()
