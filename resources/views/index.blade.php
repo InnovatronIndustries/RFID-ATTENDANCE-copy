@@ -113,8 +113,6 @@
     }, 10000);
   }
 
-  // call the function to initiate the refresh after 5 seconds
-  refreshPageAfterTap();
   
   function handleUIDCheck(uidToCheck) {
     $.ajax({
