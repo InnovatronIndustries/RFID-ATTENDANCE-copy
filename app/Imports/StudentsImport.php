@@ -79,9 +79,14 @@ class StudentsImport implements ToModel, WithHeadingRow
             'contact_person' => $contactPerson,
             'contact_no'     => $contactNo,
             'uid'            => $row['rfid']?? null,
-            'birthdate'      => $row['birthdate']?? null,
-            'avatar'         => $avatar
+            'birthdate'      => $row['birthdate']?? null
         ]);
+
+        // Check if the user doesn't already have an avatar
+        if (!$user->avatar) {
+            $user->avatar = $avatar;
+            $user->save();
+        }
 
         Student::updateOrCreate([
             'user_id' => $user->id

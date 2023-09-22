@@ -34,7 +34,7 @@ class EmployeesImport implements ToModel, WithHeadingRow
         $roleID = Role::STAFF;
         $avatar = $row['lastname'].'_'.$row['firstname'].'.jpg';
 
-        return User::updateOrCreate([
+        $user = User::updateOrCreate([
             'employee_code'  => $row['employee_code']
         ], [
             'role_id'        => $roleID,
@@ -47,7 +47,6 @@ class EmployeesImport implements ToModel, WithHeadingRow
             'middlename'     => $row['middle_name']?? $row['middlename']?? null,
             'lastname'       => $row['lastname'],
             'gender'         => 'Male',
-            'avatar'         => $avatar,
             'contact_person' => $row['contact_person']?? null,
             'contact_no'     => $row['contact_no']?? $row['mobile_phone']?? null,
             'birthdate'      => null,
@@ -55,6 +54,14 @@ class EmployeesImport implements ToModel, WithHeadingRow
             'email'          => $row['email']?? null,
             'password'       => 'password'
         ]);
+
+        // Check if the user doesn't already have an avatar
+        if (!$user->avatar) {
+            $user->avatar = $avatar;
+            $user->save();
+        }
+
+        return null;
     }
 
     /**
