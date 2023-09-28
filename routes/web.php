@@ -18,7 +18,9 @@ use App\Http\Controllers\CMS\{
     UploadStudentListController,
     UploadEmployeeListController,
     UploadAvatarImagesController,
-    SchoolController
+    SchoolController,
+    ReportOverviewController,
+    Reports\AttendanceReportController
 };
 
 use App\Http\Controllers\Api\{
@@ -101,6 +103,13 @@ Route::group(['middleware' => ['auth']], function () {
     // datatables
     Route::resource('user-dt', UserDataTableController::class)->only(['index']);
     Route::resource('student-masterlist-dt', StudentMasterlistDataTableController::class)->only(['index']);
+
+    // reports
+    Route::resource('reports-overview', ReportOverviewController::class)->only(['index']);
+
+    Route::prefix('reports-overview')->group(function () {
+        Route::resource('attendance-report', AttendanceReportController::class)->only(['index', 'show']);
+    });
 });
 
 // webhooks
