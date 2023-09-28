@@ -6,10 +6,10 @@
         </a>
     </li>
 
-    <li class="{{ Request::is('grading*') ? 'current' : '' }}">
-        <a href="#!">
+    <li class="{{ Request::is('reports-overview*') ? 'current' : '' }}">
+        <a href="{{ route('reports-overview.index') }}">
             <i class="icon-bar-chart"></i>
-            Reports (Coming Soon)
+            Reports
         </a>
     </li>
 

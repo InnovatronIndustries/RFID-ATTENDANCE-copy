@@ -7,6 +7,9 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Arr;
 use Auth, Storage;
+use App\Models\{
+    School
+};
 
 class Controller extends BaseController
 {
