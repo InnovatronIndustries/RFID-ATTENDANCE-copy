@@ -146,7 +146,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="required">School Address</label>
                                     <textarea
@@ -157,6 +157,49 @@
                                         cols="30"
                                         rows="2"
                                     >{{ $school->address }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="form-group">
+                            <label>School Settings</label><br /><br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="required">Daily SMS Credits Per User</label>
+                                        <input
+                                            type="text"
+                                            name="max_user_sms_per_day"
+                                            value="{{ $school->max_user_sms_per_day }}"
+                                            class="form-control"
+                                            placeholder="Enter Max User SMS Per Day"
+                                        />
+                                        <small>*Note: set to 0 for unlimited</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="required">Max SMS Credits Allocated (Credits Used: {{ $school->sms_credits_used }})</label>
+                                        <input
+                                            type="text"
+                                            name="max_sms_credits"
+                                            value="{{ $school->max_sms_credits }}"
+                                            class="form-control"
+                                            placeholder="Enter max SMS credits allocated for this school"
+                                        />
+                                        <small>*Note: set to 0 for unlimited</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="checkbox">
+                                            <input type="checkbox" class="" name="is_sms_enabled" value="1" {{ $school->is_sms_enabled ? 'checked' : ' ' }}>
+                                            Allow users to receive SMS<br />
+                                        </label>
+                                        <small class="text-muted">Enables users to receive SMS when using the rfid attendance module</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>

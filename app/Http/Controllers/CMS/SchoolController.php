@@ -62,6 +62,9 @@ class SchoolController extends Controller
         $school->logo = $finalLogo?? '';
         $school->banner = $finalBanner?? '';
         $school->rfid_subdomain = strtolower($request->rfid_subdomain);
+        $school->max_user_sms_per_day = 2;
+        $school->max_sms_credits = 0;
+        $school->is_sms_enabled = false;
         $school->save();
 
         return back()->with('success', 'School has been added successfully.');
@@ -109,6 +112,9 @@ class SchoolController extends Controller
         $school->logo = $finalLogo?? '';
         $school->banner = $finalBanner?? '';
         $school->rfid_subdomain = strtolower($request->rfid_subdomain);
+        $school->max_user_sms_per_day = $request->max_user_sms_per_day;
+        $school->max_sms_credits = $request->max_sms_credits;
+        $school->is_sms_enabled = $request->is_sms_enabled?? false;
         $school->save();
 
         return back()->with('success', 'School updated successfully.');

@@ -8,18 +8,22 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use App\Services\RfidService;
+use App\Services\SmsIntegrationService;
 use App\Models\{
     RfidLog,
+    School,
     User
 };
 
 class LogOutController extends Controller
 {
     protected $rfidService;
+    protected $smsIntegrationService;
 
     public function __construct()
     {
         $this->rfidService = resolve(RfidService::class);
+        $this->smsIntegrationService = resolve(SmsIntegrationService::class);
     }
 
     public function logout(Request $request)
@@ -30,6 +34,11 @@ class LogOutController extends Controller
         if (!$uid) {
             return response()->json(['message' => 'User not found']);
         }
+
+        $subdomain = strtolower($this->getSchoolSubdomain());
+        $school = School::whereRfidSubdomain($subdomain)->first();
+        $maxSmsCredits = $school->max_sms_credits;
+        $maxUserSmsPerDay = $school->max_user_sms_per_day;
 
         // Get the latest record for the specified UID
         $latestRecord = RfidLog::whereUidAndType($uid, 'In')->latest('created_at')->first();
@@ -43,21 +52,34 @@ class LogOutController extends Controller
                 return response()->json(['success' => false]);
             }
         }
-         
-        $this->storeLogoutTime($uid, $currentDateTime);
 
+        $totalSmsCount = RfidLog::where('uid', $uid)
+            ->whereDate('log_date', Carbon::now()->toDateString())
+            ->where('is_sms_sent', true)
+            ->count();
+
+        $isSmsSent = false;
+        if ($maxSmsCredits == 0 || $maxSmsCredits > $totalSmsCount) {
+            if ($school->is_sms_enabled && ($maxUserSmsPerDay == 0 || $maxUserSmsPerDay > $totalSmsCount)) {
+                $isSmsSent = true;
+                $this->smsIntegrationService->sendSms($uid, $currentDateTime, 'Out');
+                $school->increment('sms_credits_used');
+                $school->save();
+            }
+        }
+         
+        $this->storeLogoutTime($uid, $currentDateTime, $isSmsSent);
         return response()->json(['success' => true, 'message' => 'Logged out']);
     }
 
-    private function storeLogoutTime($uid, $logDate)
+    private function storeLogoutTime($uid, $logDate, $isSmsSent)
     {
         RfidLog::create([
-            'uid'      => $uid,
-            'type'     => 'Out',
-            'log_date' => $logDate
+            'uid'         => $uid,
+            'type'        => 'Out',
+            'log_date'    => $logDate,
+            'is_sms_sent' => $isSmsSent
         ]);
-
-        Log::info('Logout time stored in database:', ['uid' => $uid, 'log_date' => $logDate]);
     }
 
     public function getLogoutTime($uid)
@@ -88,7 +110,4 @@ class LogOutController extends Controller
             return response()->json(['success' => false]);
         }
     }
-
-    
-
 }
