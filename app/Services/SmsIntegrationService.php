@@ -4,7 +4,8 @@ namespace App\Services;
 
 use App\Models\{
     User,
-    Role
+    Role,
+    RfidLog
 };
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -41,7 +42,7 @@ class SmsIntegrationService
         }
     }
 
-    public function sendSms($uid, $dateTime, $type = 'In')
+    public function sendSms($uid, $dateTime, $school, $type = 'In')
     {
         $user = User::whereUid($uid)->first();
 
@@ -57,6 +58,16 @@ class SmsIntegrationService
             $schoolName = $user->school->name?? 'Academe Portal';
             $studentName = $user->fullname;
             $logText = $type == 'In' ? "Log-in: $logTime" : "Log-out: $logTime";
+
+            if ($school->is_enable_sms_only_for_logouts && $type == 'Out') {
+                $loginLogDate = RfidLog::where('uid', $uid)
+                    ->whereDate('log_date', Carbon::now()->toDateString())
+                    ->where('type', 'In')
+                    ->first()['log_date']?? Carbon::now();
+
+                $loginTime = Carbon::parse($loginLogDate)->format('h:i A');
+                $logText = "Log-in: $loginTime / Log-out: $logTime";
+            }
 
             $message = "$schoolName $currentDate\n$studentName\n$logText\n\nvia Academe Portal";
 

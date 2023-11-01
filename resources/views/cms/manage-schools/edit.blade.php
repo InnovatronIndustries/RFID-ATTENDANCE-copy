@@ -201,6 +201,15 @@
                                         <small class="text-muted">Enables users to receive SMS when using the rfid attendance module</small>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="checkbox">
+                                            <input type="checkbox" class="" name="is_enable_sms_only_for_logouts" value="1" {{ $school->is_enable_sms_only_for_logouts ? 'checked' : ' ' }}>
+                                            Enable SMS notifications exclusively for logouts<br />
+                                        </label>
+                                        <small class="text-muted">*Note: The user will receive both login and logout information within a single SMS</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

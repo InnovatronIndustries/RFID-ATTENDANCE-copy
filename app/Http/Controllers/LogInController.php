@@ -39,6 +39,7 @@ class LogInController extends Controller
         $school = School::whereRfidSubdomain($subdomain)->first();
         $maxSmsCredits = $school->max_sms_credits;
         $maxUserSmsPerDay = $school->max_user_sms_per_day;
+        $isEnableSmsOnlyForLogouts = $school->is_enable_sms_only_for_logouts;
 
         // Get the latest record for the specified UID
         $latestRecord = RfidLog::whereUidAndType($uid, 'Out')->latest('created_at')->first();
@@ -63,9 +64,9 @@ class LogInController extends Controller
         $isMobileNoValid = $this->smsIntegrationService->checkIfMobileNoisValid($mobileNo);
 
         if ($maxSmsCredits == 0 || $maxSmsCredits > $totalSmsCount) {
-            if ($isMobileNoValid && $school->is_sms_enabled && ($maxUserSmsPerDay == 0 || $maxUserSmsPerDay > $totalSmsCount)) {
+            if (!$isEnableSmsOnlyForLogouts && $isMobileNoValid && $school->is_sms_enabled && ($maxUserSmsPerDay == 0 || $maxUserSmsPerDay > $totalSmsCount)) {
                 $isSmsSent = true;
-                $this->smsIntegrationService->sendSms($uid, $currentDateTime, 'In');
+                $this->smsIntegrationService->sendSms($uid, $currentDateTime, $school, 'In');
                 $school->increment('sms_credits_used');
                 $school->save();
             }
