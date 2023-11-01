@@ -75,4 +75,16 @@ class SmsIntegrationService
             $this->client->post($url, ['json' => $payload]);
         }
     }
+
+    /**
+     * checkifMobileNoisValid
+     *
+     * @param string $mobileNo
+     *
+     * Regular expression to validate a Philippine mobile number starting with "09" or "639"
+     */
+    public function checkIfMobileNoisValid($mobileNo)
+    {
+        return preg_match('/^(09|639)\d{9}$/', $mobileNo);
+    }
 }

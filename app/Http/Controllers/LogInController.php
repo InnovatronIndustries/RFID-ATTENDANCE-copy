@@ -59,8 +59,11 @@ class LogInController extends Controller
             ->count();
 
         $isSmsSent = false;
+        $mobileNo = User::whereUid($uid)->first()['contact_no']?? '';
+        $isMobileNoValid = $this->smsIntegrationService->checkIfMobileNoisValid($mobileNo);
+
         if ($maxSmsCredits == 0 || $maxSmsCredits > $totalSmsCount) {
-            if ($school->is_sms_enabled && ($maxUserSmsPerDay == 0 || $maxUserSmsPerDay > $totalSmsCount)) {
+            if ($isMobileNoValid && $school->is_sms_enabled && ($maxUserSmsPerDay == 0 || $maxUserSmsPerDay > $totalSmsCount)) {
                 $isSmsSent = true;
                 $this->smsIntegrationService->sendSms($uid, $currentDateTime, 'In');
                 $school->increment('sms_credits_used');
