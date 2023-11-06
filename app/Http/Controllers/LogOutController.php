@@ -64,10 +64,12 @@ class LogOutController extends Controller
 
         if ($maxSmsCredits == 0 || $maxSmsCredits > $totalSmsCount) {
             if ($isMobileNoValid && $school->is_sms_enabled && ($maxUserSmsPerDay == 0 || $maxUserSmsPerDay > $totalSmsCount)) {
-                $isSmsSent = true;
-                $this->smsIntegrationService->sendSms($uid, $currentDateTime, $school, 'Out');
-                $school->increment('sms_credits_used');
-                $school->save();
+                $sendSmsSuccess = $this->smsIntegrationService->sendSms($uid, $currentDateTime, $school, 'Out');
+                if ($sendSmsSuccess) {
+                    $isSmsSent = true;
+                    $school->increment('sms_credits_used');
+                    $school->save();
+                }
             }
         }
          

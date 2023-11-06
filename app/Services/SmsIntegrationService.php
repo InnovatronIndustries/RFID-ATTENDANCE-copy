@@ -44,46 +44,53 @@ class SmsIntegrationService
 
     public function sendSms($uid, $dateTime, $school, $type = 'In')
     {
-        $user = User::whereUid($uid)->first();
+        try {
 
-        if ($user && $user->role_id == Role::STUDENT) {
+            $user = User::whereUid($uid)->first();
 
-            $currentTimestamp = Carbon::now()->timestamp;
-            $rcvdTransId = "AP-$currentTimestamp";
+            if ($user && $user->role_id == Role::STUDENT) {
 
-            $date = Carbon::now()->startOfDay();
-            $currentDate = $date->format('M d, Y');
-            $logTime = Carbon::parse($dateTime)->format('h:i A');
+                $currentTimestamp = Carbon::now()->timestamp;
+                $rcvdTransId = "AP-$currentTimestamp";
 
-            $schoolName = $user->school->name?? 'Academe Portal';
-            $studentName = $user->fullname;
-            $logText = $type == 'In' ? "Log-in: $logTime" : "Log-out: $logTime";
+                $date = Carbon::now()->startOfDay();
+                $currentDate = $date->format('M d, Y');
+                $logTime = Carbon::parse($dateTime)->format('h:i A');
 
-            if ($school->is_enable_sms_only_for_logouts && $type == 'Out') {
-                $loginLogDate = RfidLog::where('uid', $uid)
-                    ->whereDate('log_date', Carbon::now()->toDateString())
-                    ->where('type', 'In')
-                    ->first()['log_date']?? Carbon::now();
+                $schoolName = $user->school->name?? 'Academe Portal';
+                $studentName = $user->fullname;
+                $logText = $type == 'In' ? "Log-in: $logTime" : "Log-out: $logTime";
 
-                $loginTime = Carbon::parse($loginLogDate)->format('h:i A');
-                $logText = "Log-in: $loginTime / Log-out: $logTime";
+                if ($school->is_enable_sms_only_for_logouts && $type == 'Out') {
+                    $loginLogDate = RfidLog::where('uid', $uid)
+                        ->whereDate('log_date', Carbon::now()->toDateString())
+                        ->where('type', 'In')
+                        ->first()['log_date']?? Carbon::now();
+
+                    $loginTime = Carbon::parse($loginLogDate)->format('h:i A');
+                    $logText = "Log-in: $loginTime / Log-out: $logTime";
+                }
+
+                $message = "$schoolName $currentDate\n$studentName\n$logText\n\nvia Academe Portal";
+
+                $url = "https://api.m360.com.ph/v3/api/broadcast";
+
+                $payload = [
+                    'app_key'        => 'Gk4IU39uF58OG6GT',
+                    'app_secret'     => 'hnAEFsD01EKRqB9i',
+                    'msisdn'         => $user->contact_no,
+                    'content'        => $message,
+                    'shortcode_mask' => 'APAccess',
+                    'rcvd_trans_id'  => $rcvdTransId,
+                    'is_intl'        => false
+                ];
+
+                $this->client->post($url, ['json' => $payload]);
             }
 
-            $message = "$schoolName $currentDate\n$studentName\n$logText\n\nvia Academe Portal";
-
-            $url = "https://api.m360.com.ph/v3/api/broadcast";
-
-            $payload = [
-                'app_key'        => 'Gk4IU39uF58OG6GT',
-                'app_secret'     => 'hnAEFsD01EKRqB9i',
-                'msisdn'         => $user->contact_no,
-                'content'        => $message,
-                'shortcode_mask' => 'APAccess',
-                'rcvd_trans_id'  => $rcvdTransId,
-                'is_intl'        => false
-            ];
-
-            $this->client->post($url, ['json' => $payload]);
+            return true;
+        } catch (\Exception $e) {
+            return false;
         }
     }
 
