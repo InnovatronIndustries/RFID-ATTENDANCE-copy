@@ -118,7 +118,6 @@ class UserController extends Controller
         $user->avatar = $finalAvatar;
         $user->username = $request->username?? null;
         $user->email = $request->email;
-        $user->password = $request->password;
         $user->uid = $request->uid;
         $user->address = $request->address?? null;
         $user->position = $request->position?? null;
